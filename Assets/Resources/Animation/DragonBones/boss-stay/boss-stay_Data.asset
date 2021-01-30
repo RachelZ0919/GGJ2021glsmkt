@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fae199e2d4ba4f84aa1d904772ad6326, type: 3}
+  m_Name: boss-stay_Data
+  m_EditorClassIdentifier: 
+  dataName: boss-stay
+  dragonBonesJSON: {fileID: 4900000, guid: 53857047218bcc243aef9895dd17879e, type: 3}
+  textureAtlas:
+  - textureAtlasJSON: {fileID: 4900000, guid: d12fe126ace8716498a718e4732f7c08, type: 3}
+    texture: {fileID: 2800000, guid: 611d7adef60180449a1da62dc080c705, type: 3}
+    material: {fileID: 2100000, guid: 25f5696b446f87b4ca0a0e267483c68e, type: 2}
+    uiMaterial: {fileID: 0}
