@@ -7,11 +7,11 @@ public class NormalWeapon : Weapon
 {
     [SerializeField] protected Transform shootingPoint; //子弹生成点的Transform
 
-    public override bool Shoot(Vector2 direction)
+    public override bool Shoot(Vector2 direction, AddtionalProjectileSetting setting)
     {
         if (!isReloading &&  Time.time - lastShootingTime > weaponData.shootingInter)
         {
-            Projectile projectile = GetAProjectile();
+            Projectile projectile = GetAProjectile(setting);
             projectile.Launch(shootingPoint.position, direction);
 
             //后坐力

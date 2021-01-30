@@ -3,6 +3,8 @@ using System.Collections;
 
 
 
+
+
 [RequireComponent(typeof(SpriteRenderer))]
 /// <summary>
 /// 枪种类武器的逻辑
@@ -21,6 +23,7 @@ abstract public class Weapon : MonoBehaviour
     protected int projectileLeft; //子弹数量
     protected bool isReloading; //是否在换弹
     private float reloadStartTime; //换弹开始时间
+    public LayerMask layermaskToHit;
 
     //动画
     [SerializeField] private GameObject shootEffect; //武器发射特效 
@@ -119,19 +122,14 @@ abstract public class Weapon : MonoBehaviour
     /// <param name="direction">方向</param>
     /// <param name="baseStats">影响最终输出的人物参数</param>
     /// <returns>是否射出子弹</returns>
-    abstract public bool Shoot(Vector2 direction);
+    abstract public bool Shoot(Vector2 direction, AddtionalProjectileSetting projectileSetting);
 
     /// <summary>
     /// 注册对象池
     /// </summary>
     private void RegisterPool()
     {
-        //计算对象池大小
-        //float length = Mathf.Min(10, weaponData.range); //前者是场景大小获得的经验值，场景比例改变，就要修改这个。
-        //float projectileLife = length / weaponData.projectileSpeed; //子弹从发射到消亡的平均时间
-        //float totalClips = projectileLife / (weaponData.projectilesPerClip /
-        //                          weaponData.shootingSpeed + weaponData.cooldownTime); //从发射到消亡能发射的子弹数量（以弹夹为单位） = 平均时间 / （一弹夹子弹量 * 子弹发射时间间隔 + 换弹时间）
-        //                                                                               //int poolSize = Mathf.CeilToInt(totalClips * weaponData.projectilesPerClip + 3); //换算成子弹数量，并且加了一丢丢子弹K
+        //计算对象池大小                                                                        
         int poolSize = 5;
         //申请对象池
         ProjectilePool.instance.AddPool(weaponData.projectilePoolName, weaponData.projectile, poolSize, destroyOnLoad);
@@ -167,25 +165,18 @@ abstract public class Weapon : MonoBehaviour
         transform.localPosition = new Vector3(deltaPosition.x, deltaPosition.y, 0);
     }
 
-    protected Projectile GetAProjectile()
+    protected Projectile GetAProjectile(AddtionalProjectileSetting setting)
     {
         //获取子弹
         Projectile projectile = ProjectilePool.instance.SpawnAProjectile(weaponData.projectilePoolName);
 
         //射子弹
-        if (transform.parent.gameObject.layer == 9)
-        {
-            projectile.layermaskToHit = 1 << 8 | 1 << 10 | 1 << 12 | 1 << 13;
-        }
-        else
-        {
-            projectile.layermaskToHit = 1 << 9 | 1 << 8;
-        }
+        projectile.layermaskToHit = layermaskToHit;
         projectile.damage.damage = weaponData.attack;
         projectile.damage.knockbackForce = weaponData.knockbackForce;
-        projectile.speed = weaponData.projectileSpeed;
-        projectile.range = weaponData.range;
-        projectile.lastTime = weaponData.lastTime;
+        projectile.speed = Mathf.Max(weaponData.projectileSpeed, 0);
+        projectile.range = Mathf.Max(0, weaponData.range + setting.range);
+        projectile.lastTime = Mathf.Max(0, weaponData.lastTime + setting.lastTime);
 
         return projectile;
     }

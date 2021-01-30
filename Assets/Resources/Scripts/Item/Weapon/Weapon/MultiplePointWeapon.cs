@@ -9,13 +9,13 @@ public class MultiplePointWeapon : Weapon
     /// </summary>
     [SerializeField] private List<Transform> shootingPoints;
 
-    public override bool Shoot(Vector2 direction)
+    public override bool Shoot(Vector2 direction, AddtionalProjectileSetting setting)
     {
         if (!isReloading && Time.time - lastShootingTime > weaponData.shootingInter)
         {
             for (int i = 0; i < shootingPoints.Count; i++)
             {
-                Projectile projectile = GetAProjectile();
+                Projectile projectile = GetAProjectile(setting);
                 //float angle = shootingPoints[i].eulerAngles.z * Mathf.Deg2Rad;
                 //Vector2 directionVec = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 

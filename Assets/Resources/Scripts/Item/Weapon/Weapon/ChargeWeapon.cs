@@ -5,6 +5,7 @@ using System.Collections;
 public class ChargeWeapon : Weapon
 {
     [SerializeField] protected Transform shootingPoint; //子弹生成点的Transform
+    [SerializeField] private bool needChargeShake = false;
     private float chargeTime;//蓄力时间
     private bool isCharging = false; //是否在蓄力
     private bool thisFrameIsShooting = false; //当前帧是否蓄力
@@ -15,7 +16,7 @@ public class ChargeWeapon : Weapon
         chargeTime = weaponData.shootingInter;
     }
 
-    public override bool Shoot(Vector2 direction)
+    public override bool Shoot(Vector2 direction, AddtionalProjectileSetting setting)
     {
         if (!isReloading)
         {
@@ -26,7 +27,7 @@ public class ChargeWeapon : Weapon
                 if (Time.time - shootingStartTime >= chargeTime)
                 {
                     //发射子弹
-                    Projectile projectile = GetAProjectile();
+                    Projectile projectile = GetAProjectile(setting);
                     projectile.Launch(shootingPoint.position, direction);
 
                     //后坐力
@@ -51,10 +52,14 @@ public class ChargeWeapon : Weapon
                 }
                 else
                 {
-                    //Debug.Log("isCharging");
-                    float xAmount = Random.Range(-1f, 1f) * 0.05f;
-                    float yAmount = Random.Range(-1f, 1f) * 0.05f;
-                    transform.localPosition = new Vector3(xAmount, yAmount, 0);
+                    if (needChargeShake)
+                    {
+                        //Debug.Log("isCharging");
+                        float xAmount = Random.Range(-1f, 1f) * 0.05f;
+                        float yAmount = Random.Range(-1f, 1f) * 0.05f;
+                        transform.localPosition = new Vector3(xAmount, yAmount, 0);
+                    }
+
                 }
             }
         }
@@ -67,11 +72,11 @@ public class ChargeWeapon : Weapon
         if (thisFrameIsShooting && !isCharging)
         {
             shootingStartTime = Time.time;
-            animator.SetBool("isCharging", true);
+            if(animator != null) animator.SetBool("isCharging", true);
         }
         else if (!thisFrameIsShooting && isCharging)
         {
-            animator.SetBool("isCharging", false);
+            if(animator != null) animator.SetBool("isCharging", false);
         }
 
         isCharging = thisFrameIsShooting;

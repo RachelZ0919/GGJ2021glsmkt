@@ -61,5 +61,6 @@ public class BeamProjecitle : Projectile
             Debug.Log("Deal Damage to" + hitObject.name);
             damage.DealDamage(hit, stat, hitDirection.normalized);
         }
+        if (destroyAfterHit) DestroyProjectile();
     }
 }

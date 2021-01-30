@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d31df5aca1cd2994ca22158a605c2e5a, type: 3}
-  m_Name: TadpoleProjectile
+  m_Name: BubbleProjectile
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 1751770657006826897, guid: 055b204c67629be40803c69dae144f04, type: 3}
-  projectileImage: {fileID: 21300000, guid: 366c4bd9f2d564745aadd0e42d5bde31, type: 3}
+  projectileImage: {fileID: 0}
   damageType: 1
   type: 1
   colliderType: 1
-  size: 0.5
+  size: 1
   destroyAfterHit: 1

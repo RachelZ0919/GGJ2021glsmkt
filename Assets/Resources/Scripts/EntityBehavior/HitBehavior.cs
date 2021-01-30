@@ -92,7 +92,7 @@ public class HitBehavior : MonoBehaviour
             }
 
             //视觉
-            animator.SetBool("isHit", true);
+            animator?.SetBool("isHit", true);
 
             //无敌状态
             hitStartTime = Time.time;
@@ -111,7 +111,7 @@ public class HitBehavior : MonoBehaviour
 
     private void LateUpdate()
     {
-        animator.SetBool("isHit", false);
+        animator?.SetBool("isHit", false);
         if (needSlowDown && Vector3.Distance(recoverOffset, currentOffset) > 0.01f)
         {
             rigidbody.velocity *= 0.2f;

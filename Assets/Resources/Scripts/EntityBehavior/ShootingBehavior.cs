@@ -1,6 +1,19 @@
 ﻿
 using UnityEngine;
 
+public struct AddtionalProjectileSetting
+{
+    public float range;
+    public float speed;
+    public float lastTime;
+
+    public AddtionalProjectileSetting(float r, float s, float l)
+    {
+        range = r;
+        speed = s;
+        lastTime = l;
+    }
+}
 
 public class ShootingBehavior : MonoBehaviour
 {
@@ -8,6 +21,8 @@ public class ShootingBehavior : MonoBehaviour
     /// 实体当前持有的枪
     /// </summary>
     public Weapon weapon;
+    //额外设置
+    public AddtionalProjectileSetting setting = new AddtionalProjectileSetting(0, 0, 0);
 
     #region Visual 
 
@@ -90,7 +105,7 @@ public class ShootingBehavior : MonoBehaviour
 
         UpdateDirection(direction);
 
-        bool hasShot = weapon.Shoot(direction);
+        bool hasShot = weapon.Shoot(direction, setting);
         if (hasShot)
         {
             //抖屏

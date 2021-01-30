@@ -29,6 +29,7 @@ abstract public class Projectile : MonoBehaviour
     /// 所属对象池
     /// </summary>
     public string poolName { protected get; set; }
+    public bool destroyAfterHit { protected get; set; }
 
     protected SpriteRenderer spriteRenderer;
     protected Rigidbody2D rigidbody;

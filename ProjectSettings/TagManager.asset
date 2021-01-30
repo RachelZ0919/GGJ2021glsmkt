@@ -21,10 +21,10 @@ TagManager:
   - 
   - TinyTadpole
   - Frame
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Shell
+  - Enemy
+  - Projectile
   - 
   - 
   - 

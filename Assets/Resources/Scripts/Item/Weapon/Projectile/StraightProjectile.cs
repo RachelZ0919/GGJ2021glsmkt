@@ -8,7 +8,6 @@ using System.Collections;
 public class StraightProjectile : Projectile
 {
     private float startTime;
-    private bool isLaunched = false;
 
     private void Update()
     {
@@ -23,14 +22,12 @@ public class StraightProjectile : Projectile
     public override void Initialize()
     {
         rigidbody.velocity = Vector2.zero;
-        isLaunched = true;
     }
 
     public override void Launch(Vector2 position, Vector2 direction)
     {
         //Debug.Log($"launch{name}");
         //已经发射
-        isLaunched = true;
         collider.enabled = true;
 
         //记录开始时间
@@ -59,6 +56,6 @@ public class StraightProjectile : Projectile
         }
         collider.enabled = false;
         EffectPool.instance?.PlayEffect("hit_effect", hitPos, hitDirection);
-        DestroyProjectile();
+        if(destroyAfterHit) DestroyProjectile();
     }
 }

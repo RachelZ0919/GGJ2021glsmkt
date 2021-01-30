@@ -5,7 +5,8 @@
 public enum ProjectileType
 {
     Straight = 1,
-    Beam = 2
+    Beam = 2,
+    Boomerang = 3
 }
 
 public enum ColliderType
@@ -40,6 +41,10 @@ public class ProjectileData : ScriptableObject
     /// 子弹大小
     /// </summary>
     public float size;
+    /// <summary>
+    /// 击中敌人后是否消失
+    /// </summary>
+    public bool destroyAfterHit;
 
     public Projectile GenerateProjectile()
     {
@@ -80,6 +85,7 @@ public class ProjectileData : ScriptableObject
                     Projectile proj = projectile.AddComponent<StraightProjectile>();
                     proj.damage = Damage.GetDamage(damageType);
                     proj.collider = collider;
+                    proj.destroyAfterHit = destroyAfterHit;
                     return proj;
                 }
             case ProjectileType.Beam:
@@ -88,6 +94,15 @@ public class ProjectileData : ScriptableObject
                     proj.damage = Damage.GetDamage(damageType);
                     proj.collider = collider;
                     projectileSprite.drawMode = SpriteDrawMode.Sliced;
+                    proj.destroyAfterHit = destroyAfterHit;
+                    return proj;
+                }
+            case ProjectileType.Boomerang:
+                {
+                    Projectile proj = projectile.AddComponent<BoomerangProjectile>();
+                    proj.damage = Damage.GetDamage(damageType);
+                    proj.collider = collider;
+                    proj.destroyAfterHit = destroyAfterHit;
                     return proj;
                 }
         }
