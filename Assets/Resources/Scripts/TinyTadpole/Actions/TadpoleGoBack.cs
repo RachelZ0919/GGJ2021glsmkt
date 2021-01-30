@@ -1,11 +1,17 @@
 ﻿using UnityEngine;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using DragonBones;
 
 public class TadpoleGoBack : Action
 {
+    public SharedGameObject animationObject;
+
     private Rigidbody2D rigidbody;
     private TinyTadpole tadpoleData;
+    private UnityArmatureComponent unityArmature;
+    private ShootingBehavior shootingBehavior;
+
     public SharedFloat predictStep = Time.deltaTime * 2f;
     public SharedFloat accel = 40f;
 
@@ -13,6 +19,15 @@ public class TadpoleGoBack : Action
     {
         rigidbody = GetComponent<Rigidbody2D>();
         tadpoleData = GetComponent<TinyTadpole>();
+        unityArmature = animationObject.Value.GetComponent<UnityArmatureComponent>();
+        shootingBehavior = GetComponent<ShootingBehavior>();
+    }
+
+    public override void OnStart()
+    {
+        unityArmature.animation.Play("newAnimation");
+        tadpoleData.IsBacking = true;
+        tadpoleData.HasHit = false;
     }
 
     public override TaskStatus OnUpdate()
@@ -21,6 +36,8 @@ public class TadpoleGoBack : Action
         if (distance < 1f)
         {
             tadpoleData.TadpoleGroup.Comeback(tadpoleData);
+            tadpoleData.IsBacking = false;
+            tadpoleData.HasHit = true;
             return TaskStatus.Success;
         }
 
@@ -35,6 +52,8 @@ public class TadpoleGoBack : Action
         velocity.y = Mathf.MoveTowards(vel_y, targetVel.y, maxSpeedChange);
 
         rigidbody.velocity = velocity;
+
+        shootingBehavior.UpdateDirection(velocity.normalized);
 
         return TaskStatus.Running;
     }

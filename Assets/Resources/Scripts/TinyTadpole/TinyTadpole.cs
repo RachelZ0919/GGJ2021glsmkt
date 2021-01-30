@@ -8,8 +8,6 @@ public class TinyTadpole : MonoBehaviour
     private TinyTadpoleData tadpoleData;
 
     [HideInInspector]
-    public bool isShoot = false;
-    [HideInInspector]
     public bool initialized = false;
 
     #region properties
@@ -78,6 +76,16 @@ public class TinyTadpole : MonoBehaviour
 
     #endregion
 
+    #region HitDamage
+
+    public bool IsShooting { get; set; }
+    public bool IsBacking { get; set; }
+    public bool HasHit { get; set; }
+    Damage shootDamage;
+    Damage backDamage;
+
+    #endregion
+
 
     private void Awake()
     {
@@ -87,6 +95,13 @@ public class TinyTadpole : MonoBehaviour
     public void SetData(TinyTadpoleData data)
     {
         tadpoleData = data;
+
+        shootDamage = new NormalDamage();
+        shootDamage.damage = tadpoleData.hitAttack;
+        shootDamage.knockbackForce = 0;
+        backDamage = new NormalDamage();
+        backDamage.damage = tadpoleData.backHitAttack;
+        shootDamage.knockbackForce = 0;
     }
 
     public void Shoot(Vector2 direction)
@@ -113,5 +128,26 @@ public class TinyTadpole : MonoBehaviour
             behaviorTree.SendEvent("Defend");
         }
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            HitBehavior hit = collision.gameObject.GetComponent<HitBehavior>();
+            if (!HasHit)
+            {
+                if (IsShooting)
+                {
+                    HasHit = true;
+                    shootDamage.DealDamage(hit, null, Direction, false);
+                }else if (IsBacking)
+                {
+                    HasHit = true;
+                    Vector2 myPos = transform.position;
+                    backDamage.DealDamage(hit, null, (ParentRigidbody.position - myPos).normalized, false);
+                }
+            }
+        }
     }
 }

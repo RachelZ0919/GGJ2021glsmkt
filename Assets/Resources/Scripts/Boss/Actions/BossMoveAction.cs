@@ -24,6 +24,7 @@ public class BossMoveAction : Action
         }
         else
         {
+            Debug.Log("Success");
             transform.position = waypoint.Value.position;
             rigidbody.velocity = Vector2.zero;
             return TaskStatus.Success;

@@ -17,6 +17,8 @@ public class TinyTadpoleData : ScriptableObject
 
     public float hitAttack;
 
+    public float backHitAttack;
+
     public float[] shootSpeedBuffs;
 
     public float defendTime;

@@ -22,9 +22,17 @@ public class ProjectileData : ScriptableObject
 {
     [HideInInspector] public GameObject projectilePrefab;
     /// <summary>
+    /// 子弹是否是动画
+    /// </summary>
+    public bool isAnim;
+    /// <summary>
     /// 子弹样式
     /// </summary>
-    public Sprite projectileImage; //todo:支持子弹动画
+    public Sprite projectileImage;
+    /// <summary>
+    /// 子弹动画样式
+    /// </summary>
+    public GameObject projectileAnim;
     /// <summary>
     /// 子弹伤害类型
     /// </summary>
@@ -53,30 +61,41 @@ public class ProjectileData : ScriptableObject
         //设置图片
         Transform spriteTransform = projectile.transform.Find("sprite");
         SpriteRenderer projectileSprite = spriteTransform.GetComponent<SpriteRenderer>();
-        projectileSprite.sprite = projectileImage;
+
+        //设置碰撞体
+        Collider2D collider = null;
+
+        if (isAnim)
+        {
+            projectileSprite.enabled = false;
+            GameObject animObj = Instantiate(projectileAnim, spriteTransform);
+            collider = animObj.GetComponentInChildren<Collider2D>();
+        }
+        else
+        {
+            projectileSprite.sprite = projectileImage;
+            switch (colliderType)
+            {
+                case ColliderType.Circle:
+                    {
+                        CircleCollider2D circleCollider = spriteTransform.gameObject.AddComponent<CircleCollider2D>();
+                        collider = circleCollider;
+                        break;
+                    }
+                case ColliderType.Box:
+                    {
+                        BoxCollider2D boxCollider = spriteTransform.gameObject.AddComponent<BoxCollider2D>();
+                        collider = boxCollider;
+                        break;
+                    }
+            }
+        }
+
+        collider.isTrigger = true;
 
         //设置子弹大小
         spriteTransform.localScale = new Vector3(size, size, 1);
 
-        //设置碰撞体
-        Collider2D collider = null;
-        switch (colliderType)
-        {
-            case ColliderType.Circle:
-                {
-                    CircleCollider2D circleCollider = spriteTransform.gameObject.AddComponent<CircleCollider2D>();
-                    collider = circleCollider;
-                    break;
-                }
-            case ColliderType.Box:
-                {
-                    BoxCollider2D boxCollider = spriteTransform.gameObject.AddComponent<BoxCollider2D>();
-                    collider = boxCollider;
-                    break;
-                }
-        }
-
-        collider.isTrigger = true;
 
         switch (type)
         {

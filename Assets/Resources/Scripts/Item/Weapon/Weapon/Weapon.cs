@@ -150,7 +150,7 @@ abstract public class Weapon : MonoBehaviour
         //注册子弹池
         RegisterPool();
         //枪初始化
-        lastShootingTime = Time.time - weaponData.shootingInter;
+        lastShootingTime = Time.time - weaponData.shootingInter - 0.1f;
         projectileLeft = weaponData.projectilesPerClip;
         isReloading = false;
     }

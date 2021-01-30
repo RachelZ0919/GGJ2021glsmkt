@@ -9,15 +9,25 @@ using System.Collections;
 public class BeamProjecitle : Projectile
 {
     private float shootStartTime;
-
+    private float currentLength;
+    private bool isLaunched;
 
     public override void Initialize()
     {
         collider.enabled = false;
+        isLaunched = false;
     }
 
     private void Update()
     {
+        if(isLaunched && currentLength < range)
+        {
+            Debug.Log(range);
+            currentLength = Mathf.MoveTowards(currentLength, range, speed * Time.deltaTime);
+            SetBeamLength(currentLength);
+
+        }
+
         if (Time.time - shootStartTime > lastTime)
         {
             DestroyProjectile();
@@ -32,21 +42,14 @@ public class BeamProjecitle : Projectile
 
         collider.enabled = true;
 
-        spriteRenderer.size = new Vector2(range, spriteRenderer.size.y);
-        collider.offset = new Vector2(range / 2, 0);
-        BoxCollider2D boxCollider = collider.GetComponent<BoxCollider2D>();
-        if (boxCollider == null)
-        {
-            Debug.LogError("The Collider is not boxCollider! Beam must use Box Collider");
-            return;
-        }
-        boxCollider.size = spriteRenderer.size;
-
+        SetBeamLength(0);
+        currentLength = 0;
+        isLaunched = true;
 
         //如果没有预设lasttime，就默认0.3s
         if (lastTime == 0)
         {
-            lastTime = 0.3f;
+            lastTime = Mathf.Max(0.3f, range / speed);
         }
 
         shootStartTime = Time.time;
@@ -62,5 +65,19 @@ public class BeamProjecitle : Projectile
             damage.DealDamage(hit, stat, hitDirection.normalized);
         }
         if (destroyAfterHit) DestroyProjectile();
+    }
+
+    private void SetBeamLength(float length)
+    {
+        spriteRenderer.size = new Vector2(length, spriteRenderer.size.y);
+        collider.offset = new Vector2(length / 2, 0);
+
+        BoxCollider2D boxCollider = collider.GetComponent<BoxCollider2D>();
+        if (boxCollider == null)
+        {
+            Debug.LogError("The Collider is not boxCollider! Beam must use Box Collider");
+            return;
+        }
+        boxCollider.size = spriteRenderer.size;
     }
 }

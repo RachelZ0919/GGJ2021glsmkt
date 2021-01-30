@@ -31,7 +31,6 @@ public class TadpoleGroup : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Start!");
         TinyTadpole[] tadpoles = GetComponentsInChildren<TinyTadpole>();
         Rigidbody2D followRigidbody = transform.parent.GetComponent<Rigidbody2D>();
         for (int i = 0; i < tadpoles.Length; i++)

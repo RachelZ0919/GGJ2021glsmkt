@@ -9,7 +9,7 @@ public class NormalWeapon : Weapon
 
     public override bool Shoot(Vector2 direction, AddtionalProjectileSetting setting)
     {
-        if (!isReloading &&  Time.time - lastShootingTime > weaponData.shootingInter)
+        if (!isReloading &&  Time.time - lastShootingTime >= weaponData.shootingInter)
         {
             Projectile projectile = GetAProjectile(setting);
             projectile.Launch(shootingPoint.position, direction);

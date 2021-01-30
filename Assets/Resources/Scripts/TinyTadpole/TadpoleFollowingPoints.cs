@@ -69,7 +69,7 @@ public class TadpoleFollowingPoints : MonoBehaviour
             float startAngle = (followingPoints.Count - 1) * angle / 2;
             for (int i = 0; i < followingPoints.Count; i++)
             {
-                float leftAngle = Mathf.Abs(Vector2.SignedAngle(Vector2.left, followingPoints[i].position - transform.position) - startAngle);
+                float leftAngle = Mathf.Abs(Vector2.SignedAngle(transform.TransformDirection(Vector2.left), followingPoints[i].position - transform.position) - startAngle);
                 if (leftAngle < 1)
                 {
                     SetPointPostion(followingPoints[i], startAngle);
@@ -92,7 +92,7 @@ public class TadpoleFollowingPoints : MonoBehaviour
     private void UpdatePosition(Transform point, float targetAngle, float speed)
     {
         Vector2 direction = point.position - transform.position;
-        float currentAngle = Vector2.SignedAngle(Vector2.left, direction);
+        float currentAngle = Vector2.SignedAngle(transform.TransformDirection(Vector2.left), direction);
         while (targetAngle > currentAngle)
         {
             targetAngle -= 360f;

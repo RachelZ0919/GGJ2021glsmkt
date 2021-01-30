@@ -56,7 +56,6 @@ public class TadpoleDefend : Action
                 transform.position = Vector2.MoveTowards(transform.position, targetPosition, lastVel * Time.fixedDeltaTime * Mathf.Min(1, Vector2.Distance(transform.position, targetPosition) / 0.5f));
                 if(Vector3.Distance(tadpoleData.FollowTransform.position,transform.position) < 0.1f)
                 {
-                    Debug.Log("Close Enough!");
                     isOnPoint = true;
                 }
             }

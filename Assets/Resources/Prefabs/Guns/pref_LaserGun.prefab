@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5421649709538057692}
   - component: {fileID: 2916618119583082853}
-  - component: {fileID: 3756268470903695968}
+  - component: {fileID: 7785598706136228580}
   m_Layer: 0
   m_Name: pref_LaserGun
   m_TagString: Untagged
@@ -114,7 +114,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3756268470903695968
+--- !u!114 &7785598706136228580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,15 +123,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 6146992880561568225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4462b7e9ef6c2d4191c5ddbdc60fec0, type: 3}
+  m_Script: {fileID: 11500000, guid: 2eeed1cfc732c5643a1d6ee67d57eb2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: bfbba738b04bd7c4f8955369cce9d2f9, type: 2}
+  weaponData: {fileID: 11400000, guid: 1c21ab0554848eb4c8431367f703e301, type: 2}
   itemSprite: {fileID: 0}
   destroyOnLoad: 0
   layermaskToHit:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 3072
   shootEffect: {fileID: 0}
   shootingPoint: {fileID: 3116055970623389320}
-  needChargeShake: 0

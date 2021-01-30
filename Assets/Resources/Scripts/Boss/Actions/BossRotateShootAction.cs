@@ -11,6 +11,10 @@ public class BossRotateShootAction : Action
     public SharedFloat turningAngle = 0;
     public SharedFloat startAngle = 0;
 
+    public SharedFloat addtionalRange = 0;
+    public SharedFloat addtionalSpeed = 0;
+    public SharedFloat additionalLasttime = 0;
+
     private ShootingBehavior shootingBehavior;
     private float actionStartTime;
     private float lastShootingTime;
@@ -24,13 +28,14 @@ public class BossRotateShootAction : Action
     public override void OnStart()
     {
         actionStartTime = Time.time;
-        lastShootingTime = Time.time - attackInter.Value;
+        lastShootingTime = Time.time - attackInter.Value - 0.1f;
         angle = startAngle.Value;
+
     }
 
     public override TaskStatus OnUpdate()
     {
-        if(Time.time - actionStartTime < totalLastTime.Value)
+        if(Time.time - actionStartTime >= totalLastTime.Value)
         {
             return TaskStatus.Success;
         }
@@ -38,6 +43,7 @@ public class BossRotateShootAction : Action
         {
             if(Time.time - lastShootingTime >= attackInter.Value)
             {
+                UpdateAdditionalSettings();
                 shootingBehavior.Shoot(GetDirection());
                 angle += turningAngle.Value;
                 
@@ -63,5 +69,12 @@ public class BossRotateShootAction : Action
         float x = (vec.x * Mathf.Cos(radius) - vec.y * Mathf.Sin(radius));
         float y = (vec.x * Mathf.Sin(radius) + vec.y * Mathf.Cos(radius));
         return new Vector2(x, y);
+    }
+
+    private void UpdateAdditionalSettings()
+    {
+        shootingBehavior.setting.range = addtionalRange.Value;
+        shootingBehavior.setting.speed = addtionalSpeed.Value;
+        shootingBehavior.setting.lastTime = additionalLasttime.Value;
     }
 }

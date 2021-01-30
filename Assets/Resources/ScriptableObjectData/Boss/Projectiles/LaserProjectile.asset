@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: LaserProjectile
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 1751770657006826897, guid: 055b204c67629be40803c69dae144f04, type: 3}
+  isAnim: 1
   projectileImage: {fileID: 0}
+  projectileAnim: {fileID: 8915910337917211893, guid: c50b26fd54053194fb067f918cf91488, type: 3}
   damageType: 1
   type: 1
   colliderType: 2
