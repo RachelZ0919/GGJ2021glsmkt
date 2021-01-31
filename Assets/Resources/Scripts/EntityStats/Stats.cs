@@ -71,6 +71,7 @@ public class Stats : MonoBehaviour
     public StatsChanged OnStatsChanged;
     #endregion
 
+    private bool isInitialized = false;
     public StatData statData;
 
     private void Awake()
@@ -119,7 +120,7 @@ public class Stats : MonoBehaviour
         {
             stats.Add(name, value);
         }
-        OnStatsChanged?.Invoke(this);
+        if(isInitialized) OnStatsChanged?.Invoke(this);
     }
 
     /// <summary>
@@ -144,6 +145,7 @@ public class Stats : MonoBehaviour
     /// </summary>
     public void ClearProperty()
     {
+        isInitialized = false;
         if (stats != null) stats.Clear();
         else stats = new Dictionary<string, float>();
     }
@@ -157,6 +159,8 @@ public class Stats : MonoBehaviour
         if (stats == null) stats = new Dictionary<string, float>();
         AddProperty("health", statData.health);
         AddProperty("maxHealth", statData.health);
+        isInitialized = true;
+        OnStatsChanged?.Invoke(this);
     }
 
 }
