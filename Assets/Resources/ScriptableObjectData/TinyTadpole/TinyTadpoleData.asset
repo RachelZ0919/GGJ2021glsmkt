@@ -25,4 +25,4 @@ MonoBehaviour:
   - 0.5
   - 0.3
   defendTime: 2
-  defendCooldown: 0
+  defendCooldown: 5
