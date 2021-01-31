@@ -35,14 +35,12 @@ public class BossAimShootAction : Action
     {
         if (Time.time - actionStartTime >= totalLastTime.Value)
         {
-            Debug.Log("End!");
             return TaskStatus.Success;
         }
         else
         {
             if (Time.time - lastShootingTime >= attackInter.Value)
             {
-                Debug.Log("Shoot A bullet!");
                 UpdateAdditionalSettings();
                 shootingBehavior.Shoot(GetDirection());
                 lastShootingTime = Time.time;

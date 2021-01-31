@@ -4,7 +4,8 @@
 
     public enum DamageType
     {
-        NormalDamage = 1
+        NormalDamage = 1,
+        ForceDamage = 2
     }
 
 /// <summary>
@@ -35,6 +36,10 @@ abstract public class Damage
             case DamageType.NormalDamage:
                 {
                     return new NormalDamage();
+                }
+            case DamageType.ForceDamage:
+                {
+                    return new ForceDamage();
                 }
         }
         return null;

@@ -22,6 +22,7 @@ public class TadpoleSleep : Action
     {
         tadpoleData.IsShooting = false;
         tadpoleData.HasHit = true;
+        tadpoleData.IsSleeping = true;
         rigidbody.velocity = Vector2.zero;
         unityArmature.animation.Play("newAnimation_1");
         return TaskStatus.Success;

@@ -28,6 +28,7 @@ public class TadpoleGoBack : Action
         unityArmature.animation.Play("newAnimation");
         tadpoleData.IsBacking = true;
         tadpoleData.HasHit = false;
+        tadpoleData.IsSleeping = false;
     }
 
     public override TaskStatus OnUpdate()

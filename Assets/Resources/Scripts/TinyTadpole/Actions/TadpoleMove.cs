@@ -15,10 +15,15 @@ public class TadpoleMove : Action
         shootingBehavior = GetComponent<ShootingBehavior>();
     }
 
+    public override void OnStart()
+    {
+        tadpoleData.IsShooting = false;
+        tadpoleData.IsBacking = false;
+        tadpoleData.HasHit = false;
+    }
+
     public override TaskStatus OnUpdate()
     {
-        tadpoleData.IsShooting = true;
-        tadpoleData.HasHit = false;
         transform.parent = tadpoleData.ParentRigidbody.transform.parent;
         rigidbody.velocity = tadpoleData.ShootMovingSpeed * tadpoleData.Direction;
         shootingBehavior.UpdateDirection(tadpoleData.Direction);

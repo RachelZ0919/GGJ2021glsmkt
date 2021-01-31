@@ -13,21 +13,25 @@ public class BossWaringAction : Action
 
     public override void OnAwake()
     {
-        sprite = spriteObject.Value.GetComponent<SpriteRenderer>();
-        sprite.enabled = false;
+        if (spriteObject.Value != null)
+        {
+            sprite = spriteObject.Value.GetComponent<SpriteRenderer>();
+            sprite.enabled = false;
+        }
+
     }
 
     public override void OnStart()
     {
         startTime = Time.time;
-        sprite.enabled = true;
+        if(sprite != null)  sprite.enabled = true;
     }
 
     public override TaskStatus OnUpdate()
     {
         if(Time.time - startTime > warningTime.Value)
         {
-            sprite.enabled = false;
+            if (sprite != null) sprite.enabled = false;
             return TaskStatus.Success;
         }
         return TaskStatus.Running;

@@ -20,6 +20,8 @@ public class HitBehavior : MonoBehaviour
     /// </summary>
     [SerializeField] private bool enableAudio = false;
 
+    public bool shieldOpen = false;
+
     public bool isIndivisible
     {
         get
@@ -75,9 +77,10 @@ public class HitBehavior : MonoBehaviour
     /// <param name="damage">伤害量</param>
     /// <param name="knockbackForce">击退强度</param>
     /// <param name="direction">击退方向</param>
-    public void GetHit(float damage, float knockbackForce, Vector2 direction, bool isTouchDamage)
+    public void GetHit(float damage, float knockbackForce, Vector2 direction, bool isTouchDamage, bool canBlockedByShield)
     {
-        if (Time.time - hitStartTime >= indivisibleDuration)
+        bool canGetHit = !canBlockedByShield || !shieldOpen;
+        if (canGetHit && Time.time - hitStartTime >= indivisibleDuration)
         {
             stat.SetValue("health", stat.health - damage);
 

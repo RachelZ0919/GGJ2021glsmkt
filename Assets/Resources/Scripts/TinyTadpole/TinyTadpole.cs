@@ -54,7 +54,7 @@ public class TinyTadpole : MonoBehaviour
             int tadpoleCount = TadpoleGroup.GetTadpoleCount();
             if(tadpoleCount == 0)
             {
-                return 0;
+                return 100;
             }
             else
             {
@@ -81,6 +81,7 @@ public class TinyTadpole : MonoBehaviour
     public bool IsShooting { get; set; }
     public bool IsBacking { get; set; }
     public bool HasHit { get; set; }
+    public bool IsSleeping { get; set; }
     Damage shootDamage;
     Damage backDamage;
 
@@ -148,6 +149,17 @@ public class TinyTadpole : MonoBehaviour
                     backDamage.DealDamage(hit, null, (ParentRigidbody.position - myPos).normalized, false);
                 }
             }
+        }else if (collision.gameObject.CompareTag("Player"))
+        {
+            GoBack();
+        }
+    }
+
+    public void ForceScatter()
+    {
+        if (initialized)
+        {
+            behaviorTree.SendEvent("ForceSleep");
         }
     }
 }
