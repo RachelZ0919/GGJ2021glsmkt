@@ -137,7 +137,6 @@ public class TadpoleGroup : MonoBehaviour
     /// <returns>可用蝌蚪数量</returns>
     public int GetTadpoleCount()
     {
-        Debug.Log($"GetTadpoleCount:{availableTadpoles.Count}");
         return availableTadpoles.Count;
     }
 
