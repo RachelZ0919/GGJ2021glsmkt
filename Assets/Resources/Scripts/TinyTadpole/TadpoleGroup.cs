@@ -21,7 +21,21 @@ public class TadpoleGroup : MonoBehaviour
 
     private bool getScattered;
 
+    public bool CanDefend
+    {
+        get
+        {
+            return !getScattered;
+        }
+    }
 
+    public bool IsCoolingDown
+    {
+        get
+        {
+            return Time.time - lastDefendTime < tadpoleData.defendCooldown;
+        }
+    }
 
 
     private void Awake()

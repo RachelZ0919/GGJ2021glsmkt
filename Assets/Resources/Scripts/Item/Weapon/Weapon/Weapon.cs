@@ -174,7 +174,7 @@ abstract public class Weapon : MonoBehaviour
         projectile.layermaskToHit = layermaskToHit;
         projectile.damage.damage = weaponData.attack;
         projectile.damage.knockbackForce = weaponData.knockbackForce;
-        projectile.speed = Mathf.Max(weaponData.projectileSpeed, 0);
+        projectile.speed = Mathf.Max(weaponData.projectileSpeed + setting.speed, 0);
         projectile.range = Mathf.Max(0, weaponData.range + setting.range);
         projectile.lastTime = Mathf.Max(0, weaponData.lastTime + setting.lastTime);
 
