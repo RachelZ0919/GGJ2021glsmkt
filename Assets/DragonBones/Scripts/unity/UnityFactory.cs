@@ -1168,7 +1168,7 @@ namespace DragonBones
             }
 
 #if UNITY_EDITOR
-            UnityEngine.Object.DestroyImmediate(obj);
+            //UnityEngine.Object.Destroy(obj);
 #else
             UnityEngine.Object.Destroy(obj);
 #endif

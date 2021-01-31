@@ -25,8 +25,7 @@ public class BossRageAction : Action
     {
         if (animEnd)
         {
-            GameManager.instance.LevelFailed();
-            return TaskStatus.Failure;
+            return TaskStatus.Success;
         }
 
         return TaskStatus.Running;
