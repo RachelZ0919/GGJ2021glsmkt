@@ -17,12 +17,12 @@ MonoBehaviour:
   followSpeed: 10
   baseShootingAttack: 1
   baseShootingInter: 1
-  hitAttack: 5
-  backHitAttack: 5
+  hitAttack: 8
+  backHitAttack: 4
   shootSpeedBuffs:
   - 1
   - 0.8
   - 0.5
   - 0.3
   defendTime: 2
-  defendCooldown: 5
+  defendCooldown: 8
