@@ -17,6 +17,7 @@ public class BossRageAction : Action
     public override void OnStart()
     {
         armatureComponent.AddDBEventListener(EventObject.LOOP_COMPLETE, OnAnimationEnd);
+        armatureComponent.animation.Play("rage");
         animEnd = false;
     }
 
@@ -25,7 +26,7 @@ public class BossRageAction : Action
         if (animEnd)
         {
             GameManager.instance.LevelFailed();
-            return TaskStatus.Success;
+            return TaskStatus.Failure;
         }
 
         return TaskStatus.Running;

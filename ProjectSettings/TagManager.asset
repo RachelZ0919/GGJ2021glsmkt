@@ -27,7 +27,7 @@ TagManager:
   - Projectile
   - LookAtRegion
   - SleepDetect
-  - 
+  - CamBound
   - 
   - 
   - 
