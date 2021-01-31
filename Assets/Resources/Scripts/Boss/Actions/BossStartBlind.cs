@@ -3,25 +3,23 @@ using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
 
 
-public class BossWarningAnimation : Action
+public class BossStartBlind : Action
 {
-    public SharedGameObject animationObject;
-    public SharedFloat warningTime;
+    public SharedFloat lastTime;
 
     private float startTime;
 
-
     public override void OnStart()
     {
-        animationObject.Value.SetActive(true);
         startTime = Time.time;
+        BlindPointLight.instance.StartBlind();
     }
 
     public override TaskStatus OnUpdate()
     {
-        if(Time.time - startTime >= warningTime.Value)
+        if(Time.time - startTime >= lastTime.Value)
         {
-            animationObject.Value.SetActive(false);
+            BlindPointLight.instance.EndBlind();
             return TaskStatus.Success;
         }
         return TaskStatus.Running;
