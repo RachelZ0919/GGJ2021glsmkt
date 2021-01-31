@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelSucceed()
     {
-        Time.timeScale = 0;
+        SceneLoader.instance.LoadScene(3);
     }
 
 }
