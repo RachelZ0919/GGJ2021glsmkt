@@ -91,7 +91,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8915910337917211898}
   - component: {fileID: 8915910337917211899}
-  - component: {fileID: 8915910337917211892}
   m_Layer: 13
   m_Name: pref_FishBeamAnim
   m_TagString: Untagged
@@ -142,20 +141,6 @@ MonoBehaviour:
   _flipX: 0
   _flipY: 0
   _closeCombineMeshs: 0
---- !u!114 &8915910337917211892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8915910337917211893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 675db358117d9fd48a0a65784f5b44df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slotNames: []
-  dirty: 0
 --- !u!1 &8915910338503352308
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +152,7 @@ GameObject:
   - component: {fileID: 8915910338503352315}
   - component: {fileID: 8915910338503352313}
   - component: {fileID: 8915910338503352314}
-  - component: {fileID: 3831160514465006532}
+  - component: {fileID: 4039400183573684574}
   m_Layer: 13
   m_Name: "\u56FE\u5C42_1"
   m_TagString: Untagged
@@ -238,8 +223,8 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8915910338503352308}
   m_Mesh: {fileID: 0}
---- !u!61 &3831160514465006532
-BoxCollider2D:
+--- !u!60 &4039400183573684574
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -251,7 +236,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.9843616, y: -0.25692916}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -261,6 +246,11 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 17.371609, y: 1.9643373}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 4.0522327, y: 1.2985805}
+      - {x: -7.630901, y: 0.9229202}
+      - {x: -7.6224194, y: -0.39960778}
+      - {x: 4.0303497, y: -0.62894726}
+      - {x: 5.4714556, y: -0.11880875}
+      - {x: 5.5326195, y: 0.79861903}
