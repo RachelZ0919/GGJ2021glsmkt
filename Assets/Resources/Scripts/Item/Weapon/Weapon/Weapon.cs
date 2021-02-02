@@ -14,7 +14,6 @@ abstract public class Weapon : MonoBehaviour
     //todo:支持多种子弹
     [SerializeField] protected WeaponData weaponData; //基本武器数据
     [SerializeField] private Sprite itemSprite; //物体
-    [SerializeField] private bool destroyOnLoad = false;
     protected Transform entity; //持有武器的实体
     protected bool isPickedUp = false; //当前是否被拾取
 
@@ -132,7 +131,7 @@ abstract public class Weapon : MonoBehaviour
         //计算对象池大小                                                                        
         int poolSize = 5;
         //申请对象池
-        ProjectilePool.instance.AddPool(weaponData.projectilePoolName, weaponData.projectile, poolSize, destroyOnLoad);
+        ProjectilePool.instance.AddPool(weaponData.projectilePoolName, weaponData.projectile, poolSize);
 
         //特效对象池
         if (shootEffect != null)

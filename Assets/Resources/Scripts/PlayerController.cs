@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour, IMoveInput, IMouseAimInput, IShow
     private Command shootCommand;
     [SerializeField]
     private Command defendCommand;
+    [SerializeField]
+    private Command showCommand;
+    [SerializeField]
+    private Command pauseCommand;
 
     #endregion
 
@@ -84,7 +88,19 @@ public class PlayerController : MonoBehaviour, IMoveInput, IMouseAimInput, IShow
             isShow = true;
         }
 
-        
+        if(showCommand != null)
+        {
+            showCommand.Execute();
+        }
+    }
+
+    private void OnPause(InputAction.CallbackContext context)
+    {
+        var value = context.ReadValue<float>();
+        if(pauseCommand != null && value > 0.15f)
+        {
+            pauseCommand.Execute();
+        }
     }
 
     #endregion
@@ -95,6 +111,11 @@ public class PlayerController : MonoBehaviour, IMoveInput, IMouseAimInput, IShow
         playerInput = new PlayerInputActionAsset();
     }
 
+    private void Start()
+    {
+        GameManager.instance.OnGameResume += RegisterInput;
+        GameManager.instance.OnGamePause += DetachInput;
+    }
 
     private void OnEnable()
     {
@@ -104,6 +125,7 @@ public class PlayerController : MonoBehaviour, IMoveInput, IMouseAimInput, IShow
         playerInput.Player.Shoot.performed += OnShootButton;
         playerInput.Player.Defend.performed += OnDefendButton;
         playerInput.Player.ShowPoint.performed += OnShow;
+        playerInput.Player.Pause.performed += OnPause;
     }
 
 
@@ -114,6 +136,25 @@ public class PlayerController : MonoBehaviour, IMoveInput, IMouseAimInput, IShow
         playerInput.Player.Shoot.performed -= OnShootButton;
         playerInput.Player.Defend.performed -= OnDefendButton;
         playerInput.Player.ShowPoint.performed -= OnShow;
+        playerInput.Player.Pause.performed -= OnPause;
         playerInput.Disable();
+    }
+
+    private void RegisterInput()
+    {
+        playerInput.Player.Movement.performed += OnMoveInput;
+        playerInput.Player.MouseAim.performed += OnMouseAimInput;
+        playerInput.Player.Shoot.performed += OnShootButton;
+        playerInput.Player.Defend.performed += OnDefendButton;
+        playerInput.Player.ShowPoint.performed += OnShow;
+    }
+
+    private void DetachInput()
+    {
+        playerInput.Player.Movement.performed -= OnMoveInput;
+        playerInput.Player.MouseAim.performed -= OnMouseAimInput;
+        playerInput.Player.Shoot.performed -= OnShootButton;
+        playerInput.Player.Defend.performed -= OnDefendButton;
+        playerInput.Player.ShowPoint.performed -= OnShow;
     }
 }

@@ -57,6 +57,14 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e64c939-632e-4f74-9f8d-07da9e7b6fa0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -158,6 +166,17 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                     ""action"": ""ShowPoint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""680aa95d-8fb6-4349-9acc-64e4d7d7ea33"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -171,6 +190,7 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_Defend = m_Player.FindAction("Defend", throwIfNotFound: true);
         m_Player_ShowPoint = m_Player.FindAction("ShowPoint", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -225,6 +245,7 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_Defend;
     private readonly InputAction m_Player_ShowPoint;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @PlayerInputActionAsset m_Wrapper;
@@ -234,6 +255,7 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @Defend => m_Wrapper.m_Player_Defend;
         public InputAction @ShowPoint => m_Wrapper.m_Player_ShowPoint;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +280,9 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                 @ShowPoint.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPoint;
                 @ShowPoint.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPoint;
                 @ShowPoint.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShowPoint;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -277,6 +302,9 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
                 @ShowPoint.started += instance.OnShowPoint;
                 @ShowPoint.performed += instance.OnShowPoint;
                 @ShowPoint.canceled += instance.OnShowPoint;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -288,5 +316,6 @@ public class @PlayerInputActionAsset : IInputActionCollection, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnDefend(InputAction.CallbackContext context);
         void OnShowPoint(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

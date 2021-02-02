@@ -10,6 +10,8 @@ TagManager:
   - ShootingOutTadpole
   - HeadingBackTadpole
   - AttackingTadpole
+  - PauseMenu
+  - BGM
   layers:
   - Default
   - TransparentFX
