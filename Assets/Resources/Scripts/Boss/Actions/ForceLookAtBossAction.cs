@@ -39,8 +39,8 @@ public class ForceLookAtBossAction : Action
             return TaskStatus.Success;
         }
 
-        Vector2 startPoint = tadpoles.transform.position;
-        Vector2 direction = tadpoles.aimingDirection;
+        Vector2 startPoint = tadpoles.leadTadpolePosition;
+        Vector2 direction = tadpoles.aimingPosition - startPoint;
 
         RaycastHit2D hit = Physics2D.Raycast(startPoint, direction, Mathf.Infinity, LayerMask.GetMask("LookAtRegion"));
         if(hit.collider != null)

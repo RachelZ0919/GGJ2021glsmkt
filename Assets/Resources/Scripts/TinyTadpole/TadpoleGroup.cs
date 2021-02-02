@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class TadpoleGroup : MonoBehaviour
 {
-    private Queue<TinyTadpole> availableTadpoles;
-    private List<TinyTadpole> outTadpoles;
-    private List<TinyTadpole> scatteredTadpoles;
-    private TadpoleFollowingPoints points;
-    private GameObject defenceCircle;
-    private HitBehavior hit;
+    private Queue<TinyTadpole> availableTadpoles; //可用蝌蚪
+    private List<TinyTadpole> outTadpoles; //出去的蝌蚪
+    private List<TinyTadpole> scatteredTadpoles; //晕倒的蝌蚪
+    private TadpoleFollowingPoints points; //跟踪点管理
+    private GameObject defenceCircle; //防御圈
+    private HitBehavior hit; //受击管理
 
     [HideInInspector]
-    public Vector2 aimingDirection;
+    public Vector2 aimingPosition;
     public TinyTadpoleData tadpoleData;
+    public Vector2 leadTadpolePosition
+    {
+        get
+        {
+            return transform.parent.position;
+        }
+    }
 
     private float startDefendTime;
     private float lastDefendTime;
@@ -89,8 +96,10 @@ public class TadpoleGroup : MonoBehaviour
             
             points.DeletePoint(tadpole.FollowTransform);
             tadpole.FollowTransform = null;
-            
-            tadpole.Shoot(aimingDirection);
+
+            Vector2 tadpolePosition = tadpole.transform.position;
+            Vector2 aimingDirection = aimingPosition - tadpolePosition;
+            tadpole.Shoot(aimingDirection.normalized);
             outTadpoles.Add(tadpole);
             return true;
         }
