@@ -38,7 +38,7 @@ public class BlindPointLight : MonoBehaviour
         }
         else
         {
-            transform.position = Vector3.SmoothDamp(transform.position, Vector3.zero, ref dampVel, 0.1f);
+            transform.position = Vector3.SmoothDamp(transform.position, Vector3.zero, ref dampVel, 1.7f);
             light.pointLightOuterRadius = Mathf.SmoothDamp(light.pointLightOuterRadius, normalRadius, ref dampSpeed, 0.5f);
         }
 
