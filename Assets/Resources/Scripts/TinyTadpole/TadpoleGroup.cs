@@ -46,11 +46,18 @@ public class TadpoleGroup : MonoBehaviour
     /// <summary>
     /// 是否在冷却防御技能
     /// </summary>
-    public bool IsCoolingDown
+    public float CoolingDownTime
     {
         get
         {
-            return Time.time - lastDefendTime < tadpoleData.defendCooldown;
+            if(Time.time - lastDefendTime >= tadpoleData.defendCooldown)
+            {
+                return 1;
+            }
+            else
+            {
+                return (Time.time - lastDefendTime) / tadpoleData.defendCooldown;
+            }
         }
     }
 

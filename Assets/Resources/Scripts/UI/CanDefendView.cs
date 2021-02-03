@@ -7,16 +7,17 @@ public class CanDefendView : MonoBehaviour
     [SerializeField]
     private Sprite CanDefend;
     [SerializeField]
-    private Sprite IsCoolingDown;
-    [SerializeField]
     private Sprite CanNotDefend;
 
+    private Image baseImage;
+    private Image fillImage;
+
     private TadpoleGroup tadpole;
-    private Image image;
 
     private void Awake()
     {
-        image = GetComponent<Image>();
+        baseImage = transform.Find("CanDefend").GetComponent<Image>();
+        fillImage = transform.Find("DefendReady").GetComponent<Image>();
         tadpole = GameObject.FindGameObjectWithTag("Player").transform.parent.GetComponentInChildren<TadpoleGroup>();
     }
 
@@ -25,14 +26,12 @@ public class CanDefendView : MonoBehaviour
     {
         if (!tadpole.CanDefend)
         {
-            image.sprite = CanNotDefend;
-        }else if (tadpole.IsCoolingDown)
+            baseImage.sprite = CanNotDefend;
+            fillImage.fillAmount = 0;
+        }else
         {
-            image.sprite = IsCoolingDown;
-        }
-        else
-        {
-            image.sprite = CanDefend;
+            baseImage.sprite = CanDefend;
+            fillImage.fillAmount = tadpole.CoolingDownTime;
         }
     }
 }
