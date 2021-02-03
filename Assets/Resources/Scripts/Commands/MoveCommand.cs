@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
+
 public class MoveCommand : Command
 {
     private Rigidbody2D rigidbody;
@@ -15,7 +15,7 @@ public class MoveCommand : Command
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
         move = GetComponent<IMoveInput>();
     }
 

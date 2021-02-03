@@ -17,7 +17,7 @@ public class CanDefendView : MonoBehaviour
     private void Awake()
     {
         image = GetComponent<Image>();
-        tadpole = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<TadpoleGroup>();
+        tadpole = GameObject.FindGameObjectWithTag("Player").transform.parent.GetComponentInChildren<TadpoleGroup>();
     }
 
     // Update is called once per frame

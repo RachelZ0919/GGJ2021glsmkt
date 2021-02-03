@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TadpoleGroup : MonoBehaviour
 {
+    public TinyTadpoleData tadpoleData;
+
     private Queue<TinyTadpole> availableTadpoles; //可用蝌蚪
     private List<TinyTadpole> outTadpoles; //出去的蝌蚪
     private List<TinyTadpole> scatteredTadpoles; //晕倒的蝌蚪
@@ -11,23 +13,29 @@ public class TadpoleGroup : MonoBehaviour
     private GameObject defenceCircle; //防御圈
     private HitBehavior hit; //受击管理
 
-    [HideInInspector]
-    public Vector2 aimingPosition;
-    public TinyTadpoleData tadpoleData;
+    private Transform playerTransform;
+    private Vector3 positionOffset;
+    [HideInInspector] public Vector2 aimingPosition;
+    /// <summary>
+    /// 玩家操纵蝌蚪所在位置
+    /// </summary>
     public Vector2 leadTadpolePosition
     {
         get
         {
-            return transform.parent.position;
+            return playerTransform.position;
         }
     }
 
-    private float startDefendTime;
-    private float lastDefendTime;
-    private bool prepareToDefend;
+    #region Defend
 
-    private bool getScattered;
-
+    private float startDefendTime;//该次防御开始时间
+    private float lastDefendTime;//上次开始防御时间（计算CD用）
+    private bool prepareToDefend;//是否在等待僚机回归并开启防御
+    private bool getScattered;//有没有被强制散开
+    /// <summary>
+    /// 是否可以触发防御
+    /// </summary>
     public bool CanDefend
     {
         get
@@ -35,7 +43,9 @@ public class TadpoleGroup : MonoBehaviour
             return !getScattered;
         }
     }
-
+    /// <summary>
+    /// 是否在冷却防御技能
+    /// </summary>
     public bool IsCoolingDown
     {
         get
@@ -44,26 +54,38 @@ public class TadpoleGroup : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Audio
+
     [SerializeField] private AudioManager audio;
     [SerializeField] private AudioClip shootSoundEffect;
     [SerializeField] private AudioClip defendSoundEffect;
+    
+    #endregion
 
     private void Awake()
     {
         availableTadpoles = new Queue<TinyTadpole>();
         outTadpoles = new List<TinyTadpole>();
         scatteredTadpoles = new List<TinyTadpole>();
+
         points = GetComponentInChildren<TadpoleFollowingPoints>();
+
         defenceCircle = transform.Find("DefenceCircle").gameObject;
         defenceCircle.SetActive(false);
-        hit = GetComponentInParent<HitBehavior>();
+
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        positionOffset = transform.position - playerTransform.position;
+
+        hit = playerTransform.GetComponent<HitBehavior>();
     }
 
     private void Start()
     {
         TinyTadpole[] tadpoles = GetComponentsInChildren<TinyTadpole>();
 
-        Rigidbody2D followRigidbody = transform.parent.GetComponent<Rigidbody2D>();
+        Rigidbody2D followRigidbody = playerTransform.GetComponent<Rigidbody2D>();
         for (int i = 0; i < tadpoles.Length; i++)
         {
             tadpoles[i].SetData(tadpoleData);
@@ -85,6 +107,11 @@ public class TadpoleGroup : MonoBehaviour
         {
             SetShield(false);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        transform.position = playerTransform.position + positionOffset;
     }
 
     /// <summary>
@@ -255,11 +282,11 @@ public class TadpoleGroup : MonoBehaviour
         //如果是可用的，删掉原有的跟踪点，再通知散开
         for (int i = 0; i < totalAvailableCount; i++, pointIdx++) 
         {
-
             TinyTadpole tadpole = availableTadpoles.Dequeue();
             Debug.Log(tadpole.gameObject.name);
             points.DeletePoint(tadpole.FollowTransform);
             tadpole.FollowTransform = scatterPointParent.GetChild(pointIdx);
+            tadpole.transform.parent = transform.parent;
             tadpole.ForceScatter();
 
             scatteredTadpoles.Add(tadpole);

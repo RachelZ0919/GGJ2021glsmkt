@@ -8,7 +8,6 @@ public class TadpoleForceSleep : Action
     private TinyTadpole tadpoleData;
     private ShootingBehavior shootingBehavior;
 
-    private bool needScatter;
     public SharedFloat accel = 60f;
     public SharedFloat scatterSpeed = 20f;
 
@@ -24,24 +23,10 @@ public class TadpoleForceSleep : Action
         tadpoleData.IsShooting = false;
         tadpoleData.HasHit = true;
         tadpoleData.IsBacking = false;
-
-        if (tadpoleData.IsSleeping)
-        {
-            needScatter = false;
-        }
-        else
-        {
-            needScatter = true;
-        }
     }
 
     public override TaskStatus OnUpdate()
     {
-        if (!needScatter)
-        {
-            return TaskStatus.Success;
-        }
-
         float distance = Vector2.Distance(tadpoleData.FollowTransform.position, rigidbody.position);
         if (distance < 0.2f)
         {

@@ -9,7 +9,7 @@ public class BossAimShootAction : Action
     public SharedGameObject shootingObject;
     public SharedFloat attackInter;
     public SharedFloat totalLastTime;
-    public SharedTransform aimingTransform;
+    private UnityEngine.Transform aimingTransform;
 
     public SharedFloat addtionalRange = 0;
     public SharedFloat addtionalSpeed = 0;
@@ -26,6 +26,7 @@ public class BossAimShootAction : Action
     public override void OnAwake()
     {
         armatureComponent = transform.Find("anim").GetComponent<UnityArmatureComponent>();
+        aimingTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public override void OnStart()
@@ -60,7 +61,7 @@ public class BossAimShootAction : Action
 
     private Vector2 GetDirection()
     {
-        Vector2 targetPos = aimingTransform.Value.position;
+        Vector2 targetPos = aimingTransform.position;
         Vector2 myPos = shootingBehavior.holdingPoint.position;
         return targetPos - myPos;
     }

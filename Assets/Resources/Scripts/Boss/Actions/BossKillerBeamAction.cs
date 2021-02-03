@@ -8,13 +8,13 @@ using BehaviorDesigner.Runtime.Tasks;
 public class BossKillerBeamAction : Action
 {
     public SharedGameObject shootingObject;
-    public SharedTransform aimingTransform;
+    private Transform aimingTransform;
 
     private ShootingBehavior shootingBehavior;
 
     public override void OnAwake()
     {
-        
+        aimingTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public override void OnStart()
@@ -25,7 +25,7 @@ public class BossKillerBeamAction : Action
     public override TaskStatus OnUpdate()
     {
         shootingBehavior.setting.range = 50;
-        Vector2 targetPosition = aimingTransform.Value.position - shootingBehavior.holdingPoint.position;
+        Vector2 targetPosition = aimingTransform.position - shootingBehavior.holdingPoint.position;
         if (shootingBehavior.Shoot(targetPosition))
         {
             return TaskStatus.Success;

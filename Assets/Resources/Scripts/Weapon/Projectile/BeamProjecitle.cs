@@ -22,10 +22,8 @@ public class BeamProjecitle : Projectile
     {
         if(isLaunched && currentLength < range)
         {
-            Debug.Log(range);
             currentLength = Mathf.MoveTowards(currentLength, range, speed * Time.deltaTime);
             SetBeamLength(currentLength);
-
         }
 
         if (Time.time - shootStartTime > lastTime)

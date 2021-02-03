@@ -36,13 +36,13 @@ public class GameManager : MonoBehaviour
 
     public void LevelFailed()
     {
-        SceneLoader.instance.LoadScene(2);
+        SceneLoader.instance.LoadScene(3);
     }
 
 
     public void LevelSucceed()
     {
-        SceneLoader.instance.LoadScene(3);
+        SceneLoader.instance.LoadScene(4);
     }
 
     private void StopGame()

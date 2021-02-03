@@ -22,7 +22,7 @@ public class ForceLookAtBossAction : Action
     public override void OnAwake()
     {
         GameObject tadpole = GameObject.FindGameObjectWithTag("Player");
-        tadpoles = tadpole.GetComponentInChildren<TadpoleGroup>();
+        tadpoles = tadpole.transform.parent.GetComponentInChildren<TadpoleGroup>();
         shootingBehavior = shootingObject.Value.GetComponent<ShootingBehavior>();
         anim = transform.Find("anim").GetComponent<UnityArmatureComponent>();
     }
