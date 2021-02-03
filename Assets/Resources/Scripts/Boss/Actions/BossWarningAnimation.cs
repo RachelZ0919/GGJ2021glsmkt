@@ -13,7 +13,7 @@ public class BossWarningAnimation : Action
 
     public override void OnStart()
     {
-        if(animationObject != null)
+        if(animationObject.Value != null)
         {
             animationObject.Value.SetActive(true);
         }
@@ -29,7 +29,7 @@ public class BossWarningAnimation : Action
     {
         if(Time.time - startTime >= warningTime.Value)
         {
-            if (animationObject != null) animationObject.Value.SetActive(false);
+            if (animationObject.Value != null) animationObject.Value.SetActive(false);
             return TaskStatus.Success;
         }
         return TaskStatus.Running;
