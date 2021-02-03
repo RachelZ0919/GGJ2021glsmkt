@@ -114,7 +114,25 @@ public class ShootingBehavior : MonoBehaviour
             //抖屏
             if (enableScreenShake) CameraShake.instance.ShakeScreen(screenShakeTime, screenShakeIntensity);
             //音效
-            if (enableAudio && audio != null) audio.PlayAudio(weapon.shootingAudio);
+            if (enableAudio) {
+                if(audio == null)
+                {
+                    Debug.LogError($"Please assign a AudioManager to {gameObject.name}.ShootingBehavior Component.");
+                }
+                else
+                {
+                    if(weapon.shootingAudio != null) 
+                    {
+                        audio.PlayAudio(weapon.shootingAudio);
+                    }
+                    else
+                    {
+                        Debug.LogError($"Please assign a shooting audio in {weapon.name}'s scriptable object data.");
+                    }
+
+                }
+
+            } 
         }
 
         return hasShot;

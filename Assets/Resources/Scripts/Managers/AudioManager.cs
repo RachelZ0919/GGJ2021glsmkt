@@ -16,7 +16,14 @@ public class AudioManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         for (int i = 0; i < audioClips.Count; i++)
         {
-            audios.Add(audioClips[i].name, audioClips[i]);
+            if(audioClips[i] == null)
+            {
+                Debug.LogError($"Audio[{i}] has not assigned yet.");
+            }
+            else
+            {
+                audios.Add(audioClips[i].name, audioClips[i]);
+            }
         }
         audioClips.Clear();
     }
@@ -28,10 +35,21 @@ public class AudioManager : MonoBehaviour
         {
             audioSource.PlayOneShot(audios[name]);
         }
+        else
+        {
+            Debug.LogError("Audio " + name + " is not in the preset dictionary!");
+        }
     }
 
     public void PlayAudio(AudioClip clip)
     {
-        audioSource.PlayOneShot(clip);
+        if(clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+        else
+        {
+
+        }
     }
 }
