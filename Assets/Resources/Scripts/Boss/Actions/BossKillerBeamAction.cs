@@ -23,9 +23,7 @@ public class BossKillerBeamAction : Action
 
     public override TaskStatus OnUpdate()
     {
-        float length = Vector3.Distance(aimingTransform.Value.position, shootingBehavior.holdingPoint.position);
-        shootingBehavior.setting.range = length;
-        Debug.Log(shootingBehavior.setting.range);
+        shootingBehavior.setting.range = 50;
         Vector2 targetPosition = aimingTransform.Value.position - shootingBehavior.holdingPoint.position;
         if (shootingBehavior.Shoot(targetPosition))
         {
@@ -35,8 +33,6 @@ public class BossKillerBeamAction : Action
         {
             return TaskStatus.Failure;
         }
-
-
     }
 
 }

@@ -5,11 +5,11 @@ using BehaviorDesigner.Runtime.Tasks;
 
 public class ForceLookAtBossAction : Action
 {
-    public SharedCollider toHitCollider;
-    public SharedGameObject tadpole;
     public SharedFloat totalLastTime;
     public SharedFloat allowLookedAwayTime;
     public SharedFloat damageAmount;
+
+    public SharedGameObject warningAnimationObject;
 
     private TadpoleGroup tadpoles;
     private HitBehavior hitBehavior;
@@ -20,8 +20,9 @@ public class ForceLookAtBossAction : Action
 
     public override void OnAwake()
     {
-        tadpoles = tadpole.Value.GetComponentInChildren<TadpoleGroup>();
-        hitBehavior = tadpole.Value.GetComponent<HitBehavior>();
+        GameObject tadpole = GameObject.FindGameObjectWithTag("Player");
+        tadpoles = tadpole.GetComponentInChildren<TadpoleGroup>();
+        hitBehavior = tadpole.GetComponent<HitBehavior>();
     }
 
     public override void OnStart()
@@ -53,6 +54,8 @@ public class ForceLookAtBossAction : Action
             damage.DealDamage(hitBehavior, null, Vector2.zero);
             lastLookedAwayTime = Time.time;
         }
+
+        Debug.Log($"Boss Hit Left Time: {allowLookedAwayTime.Value - (Time.time - lastLookedAwayTime)}");
 
         //todo:视觉表现
 
