@@ -6,16 +6,22 @@ public class MouseAimCommand : Command
 {
     [SerializeField]
     private Transform visualTransform;
+    [SerializeField]
+    private Transform followingPointsTransform;
 
     private IMouseAimInput aimInput;
     private TadpoleGroup tadpoles;
 
-    private Vector2 aimingPoint;
+    private Vector3 originScale;
+    private Vector3 reverseScale;
 
     private void Awake()
     {
         aimInput = GetComponent<IMouseAimInput>();
         tadpoles = GetComponentInChildren<TadpoleGroup>();
+        originScale = visualTransform.localScale;
+        originScale.x = Mathf.Abs(originScale.x);
+        reverseScale = new Vector3(-originScale.x, originScale.y, originScale.z);
     }
 
     public override void Execute()
@@ -32,9 +38,21 @@ public class MouseAimCommand : Command
         Vector2 direction = (mousePos - myPos).normalized;
         tadpoles.aimingPosition = mousePos;
         Vector2 rotateDirection = -direction;
+        
         float angle = Vector2.SignedAngle(Vector2.left, rotateDirection);
-        visualTransform.rotation = Quaternion.Euler(0, 0, angle);
+        followingPointsTransform.rotation = Quaternion.Euler(0, 0, angle);
 
-        aimingPoint = mousePos;
+        angle = Vector2.SignedAngle(Vector2.right, direction);
+        if (Mathf.Abs(angle) > 90)
+        {
+            visualTransform.localScale = reverseScale;
+            visualTransform.rotation = Quaternion.Euler(0, 0, angle - 180);
+
+        }
+        else
+        {
+            visualTransform.localScale = originScale;
+            visualTransform.rotation = Quaternion.Euler(0, 0, angle);
+        }
     }
 }
