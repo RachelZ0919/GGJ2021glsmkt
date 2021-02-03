@@ -4,6 +4,7 @@ using BehaviorDesigner.Runtime.Tasks;
 
 
 
+
 public class BossKillerBeamAction : Action
 {
     public SharedGameObject shootingObject;
@@ -13,7 +14,7 @@ public class BossKillerBeamAction : Action
 
     public override void OnAwake()
     {
-
+        
     }
 
     public override void OnStart()

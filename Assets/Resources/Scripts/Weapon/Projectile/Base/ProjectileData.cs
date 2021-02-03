@@ -74,6 +74,7 @@ public class ProjectileData : ScriptableObject
         else
         {
             projectileSprite.sprite = projectileImage;
+            projectileSprite.sortingOrder = 1;
             switch (colliderType)
             {
                 case ColliderType.Circle:

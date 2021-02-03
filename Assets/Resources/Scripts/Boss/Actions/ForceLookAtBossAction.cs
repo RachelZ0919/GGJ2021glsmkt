@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using DragonBones;
 
 
 public class ForceLookAtBossAction : Action
 {
+    public SharedGameObject shootingObject;
     public SharedFloat totalLastTime;
     public SharedFloat allowLookedAwayTime;
-    public SharedFloat damageAmount;
 
     public SharedGameObject warningAnimationObject;
 
     private TadpoleGroup tadpoles;
-    private HitBehavior hitBehavior;
-    private ForceDamage damage;
+    private ShootingBehavior shootingBehavior;
+    private UnityArmatureComponent anim;
 
     private float lastLookedAwayTime;
     private float startTime;
@@ -22,21 +23,21 @@ public class ForceLookAtBossAction : Action
     {
         GameObject tadpole = GameObject.FindGameObjectWithTag("Player");
         tadpoles = tadpole.GetComponentInChildren<TadpoleGroup>();
-        hitBehavior = tadpole.GetComponent<HitBehavior>();
+        shootingBehavior = shootingObject.Value.GetComponent<ShootingBehavior>();
+        anim = transform.Find("anim").GetComponent<UnityArmatureComponent>();
     }
 
     public override void OnStart()
     {
         startTime = lastLookedAwayTime = Time.time;
-        damage = new ForceDamage();
-        damage.damage = damageAmount.Value;
-        damage.knockbackForce = 0;
+        anim.animation.Play("beam_attack");
     }
 
     public override TaskStatus OnUpdate()
     {
         if(Time.time - startTime >= totalLastTime.Value)
         {
+            anim.animation.Play("idle");
             return TaskStatus.Success;
         }
 
@@ -51,11 +52,13 @@ public class ForceLookAtBossAction : Action
 
         if(Time.time - lastLookedAwayTime >= allowLookedAwayTime.Value)
         {
-            damage.DealDamage(hitBehavior, null, Vector2.zero);
+            Vector2 startPos = shootingBehavior.transform.position;
+            Vector2 shootingDirection = tadpoles.leadTadpolePosition - startPos;
+            shootingBehavior.setting.range = 50;
+            shootingBehavior.Shoot(shootingDirection);
+
             lastLookedAwayTime = Time.time;
         }
-
-        Debug.Log($"Boss Hit Left Time: {allowLookedAwayTime.Value - (Time.time - lastLookedAwayTime)}");
 
         //todo:视觉表现
 

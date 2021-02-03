@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using DragonBones;
 
 
 public class BossRotateShootAction : Action
@@ -15,7 +16,11 @@ public class BossRotateShootAction : Action
     public SharedFloat addtionalSpeed = 0;
     public SharedFloat additionalLasttime = 0;
 
+    public SharedBool needPlayAnimation = false;
+    public SharedString animationName = "bubble_attack";
+
     private ShootingBehavior shootingBehavior;
+    private UnityArmatureComponent anim;
     private float actionStartTime;
     private float lastShootingTime;
     private float angle = 0;
@@ -23,6 +28,7 @@ public class BossRotateShootAction : Action
     public override void OnAwake()
     {
         shootingBehavior = shootingObject.Value.GetComponent<ShootingBehavior>();
+        anim = transform.Find("anim").GetComponent<UnityArmatureComponent>();
     }
 
     public override void OnStart()
@@ -44,6 +50,7 @@ public class BossRotateShootAction : Action
             if(Time.time - lastShootingTime >= attackInter.Value)
             {
                 UpdateAdditionalSettings();
+         
                 shootingBehavior.Shoot(GetDirection());
                 angle += turningAngle.Value;
                 
