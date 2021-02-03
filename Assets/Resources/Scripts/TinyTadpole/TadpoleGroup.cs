@@ -204,10 +204,9 @@ public class TadpoleGroup : MonoBehaviour
     {
         if(Time.time - lastDefendTime >= tadpoleData.defendCooldown) //如果过了CD
         {
-            lastDefendTime = Time.time; //刷新时间
-
             if (!getScattered) //如果是分散状态
             {
+                lastDefendTime = Time.time; //刷新时间
                 if (outTadpoles.Count == 0)
                 {
                     Defend();
