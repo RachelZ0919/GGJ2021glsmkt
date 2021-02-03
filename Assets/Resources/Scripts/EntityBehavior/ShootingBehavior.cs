@@ -1,5 +1,4 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public struct AddtionalProjectileSetting
 {
@@ -21,11 +20,15 @@ public class ShootingBehavior : MonoBehaviour
     /// 实体当前持有的枪
     /// </summary>
     public Weapon weapon;
-    //额外设置
+    /// <summary>
+    /// 额外设置
+    /// </summary>
     public AddtionalProjectileSetting setting = new AddtionalProjectileSetting(0, 0, 0);
 
     #region Visual 
-
+    /// <summary>
+    /// 持枪点
+    /// </summary>
     public Transform holdingPoint;
     [SerializeField] private Transform shootingVisualTransform;
 
@@ -40,7 +43,7 @@ public class ShootingBehavior : MonoBehaviour
 
     #region Audio
 
-    [HideInInspector] public AudioManager audio;
+    [SerializeField] private AudioManager audio;
     public bool enableAudio = true;
 
     #endregion

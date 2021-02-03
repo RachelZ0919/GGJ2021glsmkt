@@ -8,16 +8,20 @@ public class BossRageAction : Action
     private UnityArmatureComponent armatureComponent;
     private bool animEnd;
 
+    public SharedGameObject audioObject;
+    private AudioManager audio;
 
     public override void OnAwake()
     {
         armatureComponent = transform.Find("anim").GetComponent<UnityArmatureComponent>();
+        audio = audioObject.Value.GetComponent<AudioManager>();
     }
 
     public override void OnStart()
     {
         armatureComponent.AddDBEventListener(EventObject.LOOP_COMPLETE, OnAnimationEnd);
         armatureComponent.animation.Play("rage");
+        audio.PlayAudio("rage");
         animEnd = false;
     }
 

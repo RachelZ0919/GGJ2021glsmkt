@@ -44,6 +44,9 @@ public class TadpoleGroup : MonoBehaviour
         }
     }
 
+    [SerializeField] private AudioManager audio;
+    [SerializeField] private AudioClip shootSoundEffect;
+    [SerializeField] private AudioClip defendSoundEffect;
 
     private void Awake()
     {
@@ -101,6 +104,9 @@ public class TadpoleGroup : MonoBehaviour
             Vector2 aimingDirection = aimingPosition - tadpolePosition;
             tadpole.Shoot(aimingDirection.normalized);
             outTadpoles.Add(tadpole);
+
+            if (audio != null) audio.PlayAudio(shootSoundEffect);
+
             return true;
         }
 
@@ -205,6 +211,8 @@ public class TadpoleGroup : MonoBehaviour
         }
         
         SetShield(true);
+
+        if (audio != null) audio.PlayAudio(defendSoundEffect);
     }
 
     /// <summary>

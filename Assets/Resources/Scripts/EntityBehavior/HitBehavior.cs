@@ -19,8 +19,10 @@ public class HitBehavior : MonoBehaviour
     /// 是否开启音效
     /// </summary>
     [SerializeField] private bool enableAudio = false;
+    
 
-    public bool shieldOpen = false;
+
+    [HideInInspector] public bool shieldOpen = false;
 
     public bool isIndivisible
     {
@@ -42,7 +44,8 @@ public class HitBehavior : MonoBehaviour
 
     private bool needSlowDown = false;
 
-    [HideInInspector] public AudioManager audio;
+    [SerializeField] private AudioManager audio;
+    [SerializeField] private AudioClip hitAudio;
 
 
     private void Awake()
@@ -101,7 +104,7 @@ public class HitBehavior : MonoBehaviour
             hitStartTime = Time.time;
 
             //音效
-            if (enableAudio && audio != null) audio.PlayAudio("hitAudio");
+            if (enableAudio && audio != null) audio.PlayAudio(hitAudio);
 
             if (enableScreenShake)
             {
