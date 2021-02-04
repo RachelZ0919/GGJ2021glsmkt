@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f00cade4d2bc234885081e2b75d516c, type: 3}
+  m_Name: DialogueSetData
+  m_EditorClassIdentifier: 
+  dialogueSets:
+  - speakerName: Tadpole
+    backgroundImage: {fileID: 21300000, guid: 294a1deb919c9a641a9d87a476538e4d, type: 3}
+    textColor: {r: 0, g: 0, b: 0, a: 1}
+  - speakerName: Mom
+    backgroundImage: {fileID: 21300000, guid: 3ab3d39a874c08e469f6b29cbd73f2d1, type: 3}
+    textColor: {r: 1, g: 1, b: 1, a: 1}
+  - speakerName: Narrator
+    backgroundImage: {fileID: 21300000, guid: 7189a3999384bf94dbc886affc958109, type: 3}
+    textColor: {r: 0, g: 0, b: 0, a: 1}
