@@ -1,21 +1,27 @@
 ﻿using UnityEngine;
 using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
+using DragonBones;
 
 public class TadpoleForceSleep : Action
 {
+    public SharedGameObject animationObject;
+
     private Rigidbody2D rigidbody;
     private TinyTadpole tadpoleData;
-    private ShootingBehavior shootingBehavior;
+    private UnityArmatureComponent unityArmature;
 
     public SharedFloat accel = 60f;
     public SharedFloat scatterSpeed = 20f;
+
+    private bool animationEnd;
+    private bool startAnimation;
 
     public override void OnAwake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         tadpoleData = GetComponent<TinyTadpole>();
-        shootingBehavior = GetComponent<ShootingBehavior>();
+        unityArmature = animationObject.Value.GetComponent<UnityArmatureComponent>();
     }
 
     public override void OnStart()
@@ -23,21 +29,36 @@ public class TadpoleForceSleep : Action
         tadpoleData.IsShooting = false;
         tadpoleData.HasHit = true;
         tadpoleData.IsBacking = false;
+        animationEnd = false;
+        startAnimation = false;
     }
 
     public override TaskStatus OnUpdate()
     {
-        float distance = Vector2.Distance(tadpoleData.FollowTransform.position, rigidbody.position);
-        if (distance < 0.2f)
+        if (!startAnimation)
         {
-            rigidbody.velocity = Vector2.zero;
-            return TaskStatus.Success;
+            float distance = Vector2.Distance(tadpoleData.FollowTransform.position, rigidbody.position);
+            if (distance < 0.2f)
+            {
+                rigidbody.velocity = Vector2.zero;
+                startAnimation = true;
+                unityArmature.animation.Play("die");
+                unityArmature.animation.timeScale = 2;
+                unityArmature.AddDBEventListener(EventObject.LOOP_COMPLETE, OnDieAnimationEnd);
+
+            }
+            else
+            {
+                Debug.Log($"Not near enough! distance:{distance}");
+            }
         }
         else
         {
-            Debug.Log($"Not near enough! distance:{distance}");
+            if (animationEnd)
+            {
+                return TaskStatus.Success;
+            }
         }
-
         return TaskStatus.Running;
     }
 
@@ -75,6 +96,17 @@ public class TadpoleForceSleep : Action
         else
         {
             Debug.LogError("Follow Transform is null!");
+        }
+    }
+
+    private void OnDieAnimationEnd(string type, EventObject eventObject)
+    {
+        if (eventObject.animationState.name == "die")
+        {
+            unityArmature.animation.timeScale = 1;
+            unityArmature.animation.Play("die-loading");
+            unityArmature.RemoveDBEventListener(EventObject.LOOP_COMPLETE, OnDieAnimationEnd);
+            animationEnd = true;
         }
     }
 }

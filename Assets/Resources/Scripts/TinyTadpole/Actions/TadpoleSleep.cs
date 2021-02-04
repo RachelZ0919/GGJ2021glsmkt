@@ -7,6 +7,7 @@ using DragonBones;
 public class TadpoleSleep : Action
 {
     public SharedGameObject animationObject;
+    public SharedString animationName;
     private UnityArmatureComponent unityArmature;
     private Rigidbody2D rigidbody;
     private TinyTadpole tadpoleData;
@@ -24,7 +25,7 @@ public class TadpoleSleep : Action
         tadpoleData.HasHit = true;
         tadpoleData.IsSleeping = true;
         rigidbody.velocity = Vector2.zero;
-        unityArmature.animation.Play("newAnimation_1");
+        unityArmature.animation.Play(animationName.Value);
         return TaskStatus.Success;
     }
 }

@@ -6,6 +6,8 @@ public class TinyTadpole : MonoBehaviour
 {
     private BehaviorTree behaviorTree;
     private TinyTadpoleData tadpoleData;
+    [SerializeField] private AudioManager audio;
+    [SerializeField] private AudioClip hitSound;
 
     [HideInInspector]
     public bool initialized = false;
@@ -142,6 +144,7 @@ public class TinyTadpole : MonoBehaviour
                 {
                     HasHit = true;
                     shootDamage.DealDamage(hit, null, Direction, false);
+                    if (audio != null) audio.PlayAudio(hitSound);
                 }else if (IsBacking)
                 {
                     HasHit = true;
