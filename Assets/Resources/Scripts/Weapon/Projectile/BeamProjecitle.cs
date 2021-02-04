@@ -59,7 +59,6 @@ public class BeamProjecitle : Projectile
         Stats stat = hitObject.GetComponent<Stats>();
         if (hit != null && stat != null)
         {
-            Debug.Log("Deal Damage to" + hitObject.name);
             damage.DealDamage(hit, stat, hitDirection.normalized);
         }
         if (destroyAfterHit) DestroyProjectile();

@@ -20,7 +20,6 @@ public class ProjectilePool : MonoBehaviour
     {
         if (instance == null)
         {
-            Debug.Log("Instantiating Projectile Pool....");
             instance = this;
             DontDestroyOnLoad(this);
             poolDictionary = new Dictionary<string, Pool>();

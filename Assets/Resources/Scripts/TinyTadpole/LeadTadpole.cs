@@ -19,7 +19,6 @@ public class LeadTadpole : MonoBehaviour
     {
         if(stat.health <= 0)
         {
-            Debug.Log("Dead");
             animator.SetBool("isDead", true);
             armatureComponent.animation.Play("GGJ-lead-2(die)");
             stat.OnStatsChanged -= CheckDeath;
