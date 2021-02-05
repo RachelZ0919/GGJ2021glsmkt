@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 1751770657006826897, guid: 055b204c67629be40803c69dae144f04, type: 3}
   isAnim: 0
-  projectileImage: {fileID: 21300000, guid: 10c99dbfcab30fc49a8392bb4f8b82c9, type: 3}
+  projectileImage: {fileID: 21300000, guid: e5b6c806f70fdc34c99f115e5650fd44, type: 3}
   projectileAnim: {fileID: 0}
   damageType: 2
   type: 2
