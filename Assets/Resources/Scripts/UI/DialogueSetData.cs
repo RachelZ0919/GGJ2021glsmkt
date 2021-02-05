@@ -8,6 +8,7 @@ public struct DialogueSet
     public Sprite backgroundImage;
     public Color textColor;
 }
+
 public class DialogueSetData : ScriptableObject
 {
     public DialogueSet[] dialogueSets;

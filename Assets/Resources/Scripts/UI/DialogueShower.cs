@@ -12,17 +12,15 @@ public struct Dialogue
 
 public class DialogueShower : MonoBehaviour
 {
-    public DialogueSetData setData;
     public float wordShowInter = 0.05f;
+    public GameObject[] dialogueObjects;
 
     [HideInInspector] public List<Dialogue> dialogues;
 
     private AudioSource audio;
-    private Text text;
-    private GameObject dialogueObject;
     private Image raycastImage;
-    private Image backgroundImage;
-    
+
+    private Text text;
     private bool dialogueEnd;
     private int dialogueIndex;
     private int wordIndex;
@@ -34,16 +32,18 @@ public class DialogueShower : MonoBehaviour
     {
         audio = GetComponent<AudioSource>();
         text = GetComponentInChildren<Text>();
-        dialogueObject = transform.GetChild(0).gameObject;
         raycastImage = GetComponent<Image>();
-        backgroundImage = dialogueObject.GetComponentInChildren<Image>();
     }
 
     private void Start()
     {
+        for(int i = 0; i < dialogueObjects.Length; i++)
+        {
+            dialogueObjects[i].SetActive(false);
+        }
+
         dialogueEnd = true;
         raycastImage.raycastTarget = false;
-        dialogueObject.SetActive(false);
         StartDialogue();
     }
 
@@ -77,20 +77,30 @@ public class DialogueShower : MonoBehaviour
             if(dialogueIndex == dialogues.Count - 1)
             {
                 raycastImage.raycastTarget = false;
-                dialogueObject.SetActive(false);
+
+                int index = dialogues[dialogueIndex].setIndex;
+                dialogueObjects[index].SetActive(false);
+                
                 OnDialogueEnd?.Invoke();
             }
             else
             {
+                //重设播放参数
                 dialogueEnd = false;
                 wordIndex = 0;
-                text.text = "";
                 lastShowTime = Time.time - wordShowInter;
-                dialogueIndex++;
 
+                //关掉上一个object
+                int lastIndex = dialogues[dialogueIndex].setIndex;
+                dialogueObjects[lastIndex].SetActive(false);
+
+                //更新下一个object
+                dialogueIndex++;
                 int index = dialogues[dialogueIndex].setIndex;
-                backgroundImage.sprite = setData.dialogueSets[index].backgroundImage;
-                text.color = setData.dialogueSets[index].textColor;
+                dialogueObjects[index].SetActive(true);
+                text = dialogueObjects[index].GetComponentInChildren<Text>();
+                text.text = "";
+
             }
         }
     }
@@ -98,14 +108,13 @@ public class DialogueShower : MonoBehaviour
     public void StartDialogue()
     {
         raycastImage.raycastTarget = true;
-        dialogueObject.SetActive(true);
         dialogueEnd = false;
 
         dialogueIndex = wordIndex = 0;
 
         int index = dialogues[dialogueIndex].setIndex;
-        backgroundImage.sprite = setData.dialogueSets[index].backgroundImage;
-        text.color = setData.dialogueSets[index].textColor;
+        dialogueObjects[index].SetActive(true);
+        text = dialogueObjects[index].GetComponentInChildren<Text>();
 
         lastShowTime = Time.time - wordShowInter;
         text.text = "";

@@ -35,9 +35,9 @@ public class DialogueShowerEditor : Editor
         GUILayout.Label("Dialogue Setting");
 
         DialogueShower shower = (DialogueShower)target;
-        if(shower.setData == null)
+        if(shower.dialogueObjects == null || shower.dialogueObjects.Length == 0)
         {
-            EditorGUILayout.HelpBox("First Assign Dialogue Set Data!", MessageType.Info);
+            EditorGUILayout.HelpBox("First Set Dialogue Objects!", MessageType.Info);
         }
         else
         {
@@ -54,6 +54,7 @@ public class DialogueShowerEditor : Editor
                     GUILayout.BeginHorizontal();
                     GUILayout.Label("Speaker");
                     dialogue.setIndex = EditorGUILayout.Popup(shower.dialogues[i].setIndex, dialogueNames);
+                    dialogue.setIndex = Mathf.Clamp(dialogue.setIndex, 0, shower.dialogueObjects.Length - 1);
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
@@ -105,12 +106,12 @@ public class DialogueShowerEditor : Editor
     private void SetDictionary()
     { 
         DialogueShower shower = (DialogueShower)target;
-        if (shower.setData == null) return;
+        if (shower.dialogueObjects == null) return;
 
-        dialogueNames = new string[shower.setData.dialogueSets.Length];
-        for (int i = 0; i < shower.setData.dialogueSets.Length; i++)
+        dialogueNames = new string[shower.dialogueObjects.Length];
+        for (int i = 0; i < shower.dialogueObjects.Length; i++)
         {
-            dialogueNames[i] = shower.setData.dialogueSets[i].speakerName;
+            dialogueNames[i] = shower.dialogueObjects[i].name;
         }
     }
 }
