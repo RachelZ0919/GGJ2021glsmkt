@@ -98,6 +98,7 @@ public class ForceLookAtBossAction : Action
                 
                 hasStartWarning = false;
                 warningAnimationObject.Value.SetActive(false);
+                anim.animation.Play("idle");
 
                 return TaskStatus.Success;
             }
