@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class GameManager : MonoBehaviour
     public GamePause OnGamePause;
     public GamePause OnGameResume;
 
+    public UnityEvent OnNarativeStart = new UnityEvent();
+    public UnityEvent OnNarrativeEnd = new UnityEvent();
+
     private void Awake()
     {
         if(instance == null)
@@ -25,7 +29,6 @@ public class GameManager : MonoBehaviour
             GameObject bgmObject = GameObject.FindGameObjectWithTag("BGM");
             if (bgmObject != null) backgroundMusic = bgmObject.GetComponent<AudioSource>();
             gamePaused = false;
-
         }
         else
         {
@@ -36,13 +39,18 @@ public class GameManager : MonoBehaviour
 
     public void LevelFailed()
     {
-        SceneLoader.instance.LoadScene(3);
+        SceneLoader.instance.LoadScene(4);
     }
 
 
     public void LevelSucceed()
     {
-        SceneLoader.instance.LoadScene(4);
+        OnNarativeStart?.Invoke();
+    }
+
+    public void ToEndScene()
+    {
+        OnNarrativeEnd?.Invoke();
     }
 
     private void StopGame()

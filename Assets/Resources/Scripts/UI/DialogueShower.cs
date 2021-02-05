@@ -29,6 +29,7 @@ public class DialogueShower : MonoBehaviour
     private int dialogueIndex;
     private int wordIndex;
     private float lastShowTime;
+    private bool allEnd;
 
     public UnityEvent OnDialogueEnd = new UnityEvent();
 
@@ -76,6 +77,11 @@ public class DialogueShower : MonoBehaviour
 
     public void NextDialogue()
     {
+        if (allEnd)
+        {
+            return;
+        }
+
         if (!dialogueEnd)
         {
             dialogueEnd = true;
@@ -98,6 +104,7 @@ public class DialogueShower : MonoBehaviour
                 }
 
                 OnDialogueEnd?.Invoke();
+                allEnd = true;
             }
             else
             {
@@ -135,5 +142,7 @@ public class DialogueShower : MonoBehaviour
 
         lastShowTime = Time.time - wordShowInter;
         text.text = "";
+
+        allEnd = false;
     }
 }

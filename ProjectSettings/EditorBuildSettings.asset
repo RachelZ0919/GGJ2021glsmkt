@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TutorialScene.unity
     guid: 369b1f0f623c6a642adc2b65461b35e9
   - enabled: 1
+    path: Assets/Scenes/BeforeBoss.unity
+    guid: f29b86b42c5b101488ec021a24383fe1
+  - enabled: 1
     path: Assets/Scenes/boss.unity
     guid: cf4fa4281c6d9a4429322f00c0658a3a
   - enabled: 1

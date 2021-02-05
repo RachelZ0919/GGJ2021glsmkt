@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour, IMoveInput, IMouseAimInput, IShow
         playerInput.Disable();
     }
 
-    private void RegisterInput()
+    public void RegisterInput()
     {
         playerInput.Player.Movement.performed += OnMoveInput;
         playerInput.Player.MouseAim.performed += OnMouseAimInput;
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour, IMoveInput, IMouseAimInput, IShow
         playerInput.Player.ShowPoint.performed += OnShow;
     }
 
-    private void DetachInput()
+    public void DetachInput()
     {
         playerInput.Player.Movement.performed -= OnMoveInput;
         playerInput.Player.MouseAim.performed -= OnMouseAimInput;
@@ -157,4 +157,5 @@ public class PlayerController : MonoBehaviour, IMoveInput, IMouseAimInput, IShow
         playerInput.Player.Defend.performed -= OnDefendButton;
         playerInput.Player.ShowPoint.performed -= OnShow;
     }
+
 }

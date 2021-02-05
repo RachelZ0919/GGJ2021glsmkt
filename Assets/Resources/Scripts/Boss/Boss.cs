@@ -41,9 +41,9 @@ public class Boss : MonoBehaviour
         if (eventObject.animationState.name == "die")
         {
             armatureComponent.animation.GotoAndStopByProgress("die", 1);
-            GameManager.instance.LevelSucceed();
             armatureComponent.RemoveDBEventListener(EventObject.LOOP_COMPLETE, OnDeathAnimationEnd);
-
+            armatureComponent.gameObject.SetActive(false);
+            GameManager.instance.LevelSucceed();
         }
     }
 }
