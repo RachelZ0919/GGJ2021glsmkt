@@ -7,6 +7,8 @@ public class LeadTadpole : MonoBehaviour
     [SerializeField]
     private UnityArmatureComponent armatureComponent;
     private Animator animator;
+    [SerializeField] private AudioManager audio;
+    [SerializeField] private AudioClip deathSoundEffect;
 
     private void Awake()
     {
@@ -22,6 +24,18 @@ public class LeadTadpole : MonoBehaviour
             animator.SetBool("isDead", true);
             armatureComponent.animation.Play("GGJ-lead-2(die)");
             stat.OnStatsChanged -= CheckDeath;
+
+            if(audio == null)
+            {
+                Debug.LogError("Need audio manager to play player death sound effect!");
+            }else if(deathSoundEffect == null)
+            {
+                Debug.LogError("There is no death sound effect!");
+            }
+            else
+            {
+                audio.PlayAudio(deathSoundEffect);
+            }
         }
     }
 
