@@ -166,6 +166,7 @@ public class TadpoleGroup : MonoBehaviour
     {
         tadpole.transform.parent = transform;
         tadpole.FollowTransform = points.AddPoint();
+        tadpole.transform.position = tadpole.FollowTransform.position;
 
         //判断是不是在外无法回来的蝌蚪
         if (getScattered)

@@ -17,7 +17,7 @@ public class TadpoleMove : Action
 
     public override void OnStart()
     {
-        tadpoleData.IsShooting = false;
+        tadpoleData.IsShooting = true;
         tadpoleData.IsBacking = false;
         tadpoleData.HasHit = false;
     }
