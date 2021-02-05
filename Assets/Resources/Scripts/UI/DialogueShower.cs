@@ -87,7 +87,7 @@ public class DialogueShower : MonoBehaviour
             dialogueEnd = true;
             text.text = dialogues[dialogueIndex].content;
             nextIcon.SetActive(true);
-            nextIcon.transform.parent = dialogueObjects[dialogues[dialogueIndex].setIndex].transform.Find("Next");
+            nextIcon.transform.SetParent(dialogueObjects[dialogues[dialogueIndex].setIndex].transform.Find("Next"));
             nextIcon.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         }
         else
