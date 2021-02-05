@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
 
@@ -13,12 +14,15 @@ public struct Dialogue
 public class DialogueShower : MonoBehaviour
 {
     public float wordShowInter = 0.05f;
+    public bool disappearWhenEnd = true;
+    public bool playOnStart = false;
     public GameObject[] dialogueObjects;
 
     [HideInInspector] public List<Dialogue> dialogues;
 
     private AudioSource audio;
     private Image raycastImage;
+    private GameObject nextIcon;
 
     private Text text;
     private bool dialogueEnd;
@@ -26,13 +30,14 @@ public class DialogueShower : MonoBehaviour
     private int wordIndex;
     private float lastShowTime;
 
-    public delegate void DialogueEnd();
-    public DialogueEnd OnDialogueEnd;
+    public UnityEvent OnDialogueEnd = new UnityEvent();
+
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
         text = GetComponentInChildren<Text>();
         raycastImage = GetComponent<Image>();
+        nextIcon = transform.Find("NextIcon").gameObject;
     }
 
     private void Start()
@@ -41,10 +46,11 @@ public class DialogueShower : MonoBehaviour
         {
             dialogueObjects[i].SetActive(false);
         }
+        nextIcon.SetActive(false);
 
         dialogueEnd = true;
         raycastImage.raycastTarget = false;
-        StartDialogue();
+        if (playOnStart) StartDialogue();
     }
 
     private void Update()
@@ -56,6 +62,9 @@ public class DialogueShower : MonoBehaviour
 
             if(wordIndex >= dialogues[dialogueIndex].content.Length)
             {
+                nextIcon.SetActive(true);
+                nextIcon.transform.parent = dialogueObjects[dialogues[dialogueIndex].setIndex].transform.Find("Next");
+                nextIcon.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
                 dialogueEnd = true;
             }
             else
@@ -71,16 +80,23 @@ public class DialogueShower : MonoBehaviour
         {
             dialogueEnd = true;
             text.text = dialogues[dialogueIndex].content;
+            nextIcon.SetActive(true);
+            nextIcon.transform.parent = dialogueObjects[dialogues[dialogueIndex].setIndex].transform.Find("Next");
+            nextIcon.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
         }
         else
         {
             if(dialogueIndex == dialogues.Count - 1)
             {
                 raycastImage.raycastTarget = false;
+                nextIcon.SetActive(false);
 
-                int index = dialogues[dialogueIndex].setIndex;
-                dialogueObjects[index].SetActive(false);
-                
+                if (disappearWhenEnd)
+                {
+                    int index = dialogues[dialogueIndex].setIndex;
+                    dialogueObjects[index].SetActive(false);
+                }
+
                 OnDialogueEnd?.Invoke();
             }
             else
@@ -101,6 +117,7 @@ public class DialogueShower : MonoBehaviour
                 text = dialogueObjects[index].GetComponentInChildren<Text>();
                 text.text = "";
 
+                nextIcon.SetActive(false);
             }
         }
     }

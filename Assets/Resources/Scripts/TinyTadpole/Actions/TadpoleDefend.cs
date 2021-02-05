@@ -47,6 +47,7 @@ public class TadpoleDefend : Action
         {
             if (isOnPoint)
             {
+                rigidbody.velocity = Vector2.zero;
                 transform.position = tadpoleData.FollowTransform.position;
             }
             else
