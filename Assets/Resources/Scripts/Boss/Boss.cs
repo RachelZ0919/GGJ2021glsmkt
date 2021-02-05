@@ -5,6 +5,8 @@ using DragonBones;
 public class Boss : MonoBehaviour
 {
     private UnityArmatureComponent armatureComponent;
+    [SerializeField] private AudioManager audio;
+    [SerializeField] private AudioClip deathSoundEffect;
 
     private void Awake()
     {
@@ -19,6 +21,19 @@ public class Boss : MonoBehaviour
             stat.OnStatsChanged -= CheckDeath;
             armatureComponent.AddDBEventListener(EventObject.LOOP_COMPLETE, OnDeathAnimationEnd);
             armatureComponent.animation.Play("die");
+            
+            if (audio == null)
+            {
+                Debug.LogError("Need audio manager to play boss death sound effect!");
+            }
+            else if (deathSoundEffect == null)
+            {
+                Debug.LogError("There is no boss death sound effect!");
+            }
+            else
+            {
+                audio.PlayAudio(deathSoundEffect);
+            }
         }
     }
     private void OnDeathAnimationEnd(string type, EventObject eventObject)

@@ -680,7 +680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 961182359}
   m_Layer: 5
-  m_Name: Dialogue
+  m_Name: Narrator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -821,12 +821,12 @@ GameObject:
   - component: {fileID: 1352164573}
   - component: {fileID: 1352164572}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: DialoguBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1352164571
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1029,12 +1029,12 @@ GameObject:
   - component: {fileID: 1491637134}
   - component: {fileID: 1491637133}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Dialogues
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1491637132
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1067,15 +1067,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df4d61037070364aa91afc8f8b85642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setData: {fileID: 11400000, guid: 3605fce9adf09e9448e93ab6668ff005, type: 2}
   wordShowInter: 0.05
+  dialogueObjects:
+  - {fileID: 961182358}
   dialogues:
-  - setIndex: 2
+  - setIndex: 0
     content: "\u6DF1\u6D77\u4E2D\u6709\u4E00\u7FA4\u5C0F\u874C\u86AA\uFF0C\u5927\u5927\u7684\u773C\u775B\uFF0C\u9ED1\u9ED1\u7684\u8EAB\u5B50\uFF0C\u5FEB\u6D3B\u5730\u6E38\u6765\u6E38\u53BB\u3002"
-  - setIndex: 2
+  - setIndex: 0
     content: "\u5C0F\u874C\u86AA\u6E38\u54C7\u6E38\uFF0C\u8FC7\u4E86\u51E0\u5929\uFF0C\u957F\u51FA\u4E86\u4E24\u6761\u89E6\u624B\u3002"
   - setIndex: 0
-    content: "\u6211\u542C\u5230\u4E86\uFF0C\u542C\u5230\u4E86\uFF0C\u5728\u90A3\u65E0\u5C3D\u7684\u6DF7\u4E71\u80CC\u540E\uFF0C\u6211\u4EEC\u7684\u6BCD\u4EB2\uFF0C\u5728\u547C\u5524\u6211\u4EEC\u3002"
+    content: "\u5C0F\u874C\u86AA\u4EEC\u4EFF\u4F5B\u542C\u5230\uFF0C\u5728\u90A3\u65E0\u5C3D\u7684\u6DF7\u4E71\u80CC\u540E\uFF0C\u4ED6\u4EEC\u7684\u6BCD\u4EB2\uFF0C\u5728\u547C\u5524\u4ED6\u4EEC\u3002"
 --- !u!114 &1491637134
 MonoBehaviour:
   m_ObjectHideFlags: 0
