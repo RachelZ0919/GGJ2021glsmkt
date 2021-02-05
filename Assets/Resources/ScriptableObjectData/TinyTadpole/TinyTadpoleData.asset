@@ -17,7 +17,7 @@ MonoBehaviour:
   followSpeed: 10
   baseShootingAttack: 1
   baseShootingInter: 1
-  hitAttack: 18
+  hitAttack: 16
   backHitAttack: 8
   shootSpeedBuffs:
   - 1
