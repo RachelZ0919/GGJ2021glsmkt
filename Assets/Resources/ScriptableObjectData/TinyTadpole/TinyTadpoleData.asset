@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TinyTadpoleData
   m_EditorClassIdentifier: 
   shootMovingSpeed: 20
-  callbackSpeed: 10
+  callbackSpeed: 20
   followSpeed: 10
   baseShootingAttack: 1
   baseShootingInter: 1

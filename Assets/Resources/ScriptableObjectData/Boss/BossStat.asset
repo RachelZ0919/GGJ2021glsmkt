@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5f5ea31403cf64bab8840ec3c64f3c, type: 3}
   m_Name: BossStat
   m_EditorClassIdentifier: 
-  health: 1600
+  health: 1700
   knockbackResist: 0
